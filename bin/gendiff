@@ -34,6 +34,32 @@ function showHelp() {
 
 Для получения подробной информации посетите:
 https://example.com/gendiff-docs
+=======
+// Проверяем, передан ли флаг -h или --help
+if (in_array('-h', $argv) || in_array('--help', $argv)) {
+    showHelp();
+    exit(0);
+}
+
+// Основная логика программы (будет реализована позже)
+echo "Запуск gendiff без параметров\n";
+echo "Используйте -h для справки\n";
+
+/**
+ * Функция вывода справки
+ */
+function showHelp() {
+    $helpText = <<<HELP
+Generate diff
+
+Usage:
+  gendiff (-h|--help)
+  gendiff (-v|--version)
+
+Options:
+  -h --help                     Show this screen
+  -v --version                  Show version
+  --format <fmt>                Report format [default: stylish]
 HELP;
 
     echo $helpText . "\n";
