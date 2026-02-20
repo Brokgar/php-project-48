@@ -1,87 +1,32 @@
-#!/usr/bin/env php
+#!/usr/bin/php
 <?php
 
-// Подключаем автозагрузку Composer
-require_once dirname(__DIR__) . '/vendor/autoload.php';
+namespace Hexlet\Gendiff;
 
-use Hexlet\Code\Parser;
-
-function showHelp() {
-    $helpText = <<<HELP
-Использование: gendiff [ОПЦИИ] <файл1> <файл2>
-
-Сравнивает два конфигурационных файла JSON и показывает различия.
-
-ОПЦИИ:
-  -h, --help             Показать эту справку
-  -f, --format <тип>    Формат вывода (plain, stylish, json)
-  --color                Цветной вывод (если поддерживается)
-
-ПРИМЕРЫ:
-  gendiff file1.json file2.json
-  gendiff ./data/file1.json /absolute/path/file2.json
-  gendiff -f plain ../relative/path/config1.json config2.json
-
-
-ДОСТУПНЫЕ ФОРМАТЫ:
-  plain   - Простой текстовый формат, только изменения
-  stylish - Красивый формат с отступами и иконками
-  json    - JSON‑представление различий
-
-
-ПОДДЕРЖИВАЕМЫЕ ФОРМАТЫ ФАЙЛОВ:
-  JSON
-
-Для получения подробной информации посетите:
-https://example.com/gendiff-docs
-=======
-// Проверяем, передан ли флаг -h или --help
-if (in_array('-h', $argv) || in_array('--help', $argv)) {
-    showHelp();
-    exit(0);
-}
-
-// Основная логика программы (будет реализована позже)
-echo "Запуск gendiff без параметров\n";
-echo "Используйте -h для справки\n";
+require_once __DIR__ . '/../vendor/autoload.php';
 
 /**
- * Функция вывода справки
+ * Основная функция для работы из командной строки
  */
-function showHelp() {
-    $helpText = <<<HELP
-Generate diff
+function main($argv)
+{
+    // Удаляем имя скрипта из аргументов
+    array_shift($argv);
 
-Usage:
-  gendiff (-h|--help)
-  gendiff (-v|--version)
-
-Options:
-  -h --help                     Show this screen
-  -v --version                  Show version
-  --format <fmt>                Report format [default: stylish]
-HELP;
-
-    echo $helpText . "\n";
-}
-
-
-function main($argv) {
     if (in_array('-h', $argv) || in_array('--help', $argv)) {
         showHelp();
         exit(0);
     }
 
-    $args = array_slice($argv, 1);
     $options = [];
     $files = [];
 
-    for ($i = 0; $i < count($args); $i++) {
-        $arg = $args[$i];
+    for ($i = 0; $i < count($argv); $i++) {
+        $arg = $argv[$i];
 
         if ($arg === '-f' || $arg === '--format') {
-            if ($i + 1 < count($args)) {
-                $options['format'] = $args[$i + 1];
+            if ($i + 1 < count($argv)) {
+                $options['format'] = $argv[$i + 1];
                 $i++;
             } else {
                 echo "Ошибка: опция -f/--format требует указания формата\n";
@@ -101,34 +46,43 @@ function main($argv) {
     }
 
     try {
-        // Используем модуль парсинга для загрузки данных — содержимое печатается автоматически
-        $data1 = Parser::parseFile($files[0]);
-        $data2 = Parser::parseFile($files[1]);
-
-        $format = $options['format'] ?? 'plain';
-        $allowedFormats = ['plain', 'stylish', 'json'];
-
-        if (!in_array($format, $allowedFormats)) {
-            echo "Ошибка: недопустимый формат вывода '$format'. Допустимые: " . implode(', ', $allowedFormats) . "\n";
-            exit(1);
-        }
-
-        echo "Файлы успешно загружены и отображены:\n";
-        echo "Файл 1: {$files[0]} (".count($data1)." элементов)\n";
-        echo "Файл 2: {$files[1]} (".count($data2)." элементов)\n";
-        echo "Формат вывода: $format\n";
-
-        if (isset($options['color'])) {
-            echo "Цветной вывод: включен\n";
-        }
-
-        // Здесь будет логика сравнения данных
-        echo "\nСравнение завершено (демо-режим)\n";
-    } catch (Exception $e) {
+        $result = Gendiff::compareFiles($files[0], $files[1], $options);
+        echo $result;
+    } catch (\Exception $e) {
         echo "Ошибка: " . $e->getMessage() . "\n";
         exit(1);
     }
 }
 
+/**
+ * Вывод справки по использованию
+ */
+function showHelp()
+{
+    $helpText = <<<HELP
+Использование: gendiff [ОПЦИИ] <файл1> <файл2>
+
+Сравнивает два конфигурационных файла JSON и показывает различия.
+
+ОПЦИИ:
+  -h, --help             Показать эту справку
+  -f, --format <тип>    Формат вывода (plain, stylish, json)
+  --color                Цветной вывод (если поддерживается)
+
+ПРИМЕРЫ:
+  gendiff file1.json file2.json
+  gendiff -f stylish config1.json config2.json --color
+  gendiff --help
+
+ДОСТУПНЫЕ ФОРМАТЫ:
+  plain   - Простой текстовый формат, только изменения
+  stylish - Красивый формат с отступами и иконками
+  json    - JSON‑представление различий
+HELP;
+
+    echo $helpText . "\n";
+}
+
+// Точка входа при запуске из консоли
 main($argv);
 ?>
