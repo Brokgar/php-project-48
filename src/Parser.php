@@ -60,4 +60,3 @@ class Parser
         return false;
     }
 }
-?>

@@ -5,7 +5,6 @@ namespace Hexlet\Gendiff;
 use Hexlet\Gendiff\Parser;
 use Hexlet\Gendiff\Generator;
 
-
 class Gendiff
 {
     public static function compareFiles(string $file1, string $file2, array $options = []): string

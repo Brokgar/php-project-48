@@ -73,7 +73,7 @@ class Generator
         $output[] = '}';
         return implode("\n", $output) . "\n";
     }
-                
+
     /**
      * Форматирует значение для красивого вывода
      */
@@ -107,7 +107,7 @@ class Generator
                 // Если ключ есть в обоих, но значения различаются (изменённые)
                 $result['changed'][$key] = [
                     'old' => $value,
-            'new' => $data2[$key]
+                    'new' => $data2[$key],
                 ];
             } else {
                 // Значения совпадают (неизменные)
@@ -125,4 +125,3 @@ class Generator
         return $result;
     }
 }
-?>
