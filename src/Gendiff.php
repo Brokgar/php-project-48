@@ -135,4 +135,3 @@ class Gendiff
         return "\033[36m" . $diff . "\033[0m"; // Голубой для JSON
     }
 }
-?>

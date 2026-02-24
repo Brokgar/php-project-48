@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<ruleset name="MyProject">
+    <description>Coding standards for my project</description>
+
+    <!-- Используем стандарт PSR-12 -->
+    <rule ref="PSR12"/>
+
+    <!-- Игнорируем vendor и тесты -->
+    <exclude-pattern>vendor/*</exclude-pattern>
+    <exclude-pattern>tests/*</exclude-pattern>
+
+    <!-- Можно добавить кастомные правила -->
+    <rule ref="Generic.Files.LineLength">
+        <properties>
+            <property name="lineLimit" value="120"/>
+            <property name="absoluteLineLimit" value="150"/>
+        </properties>
+    </rule>
+</ruleset>
