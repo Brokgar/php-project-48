@@ -29,5 +29,5 @@ jobs:
         run: ./vendor/bin/phpunit
 
       - name: Run PHP_CodeSniffer (lint)
-        run: ./vendor/bin/phpcs
+        run: ./vendor/bin/phpcs src
 
