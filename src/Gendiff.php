@@ -7,6 +7,15 @@ use Hexlet\Gendiff\Generator;
 
 class Gendiff
 {
+    // ANSI цветовые коды
+    private const COLOR_GREEN = "\033[32m";
+    private const COLOR_RED = "\033[31m";
+    private const COLOR_YELLOW = "\033[33m";
+    private const COLOR_CYAN = "\033[36m";
+    private const COLOR_GRAY = "\033[90m";
+    private const COLOR_RESET = "\033[0m";
+
+    
     public static function compareFiles(string $file1, string $file2, array $options = []): string
     {
         $data1 = Parser::parseFile($file1);
@@ -81,11 +90,11 @@ class Gendiff
         foreach ($lines as $line) {
             if (str_starts_with($line, 'Property')) {
                 if (str_contains($line, 'was added')) {
-                    $coloredLines[] = "\033[32m" . $line . "\033[0m"; // Зелёный
+                    $coloredLines[] = self::COLOR_GREEN . $line . self::COLOR_RESET; // Зелёный
                 } elseif (str_contains($line, 'was removed')) {
-                    $coloredLines[] = "\033[31m" . $line . "\033[0m"; // Красный
+                    $coloredLines[] = self::COLOR_RED . $line . self::COLOR_RESET; // Красный
                 } elseif (str_contains($line, 'changed')) {
-                    $coloredLines[] = "\033[33m" . $line . "\033[0m"; // Жёлтый
+                    $coloredLines[] = self::COLOR_YELLOW . $line . self::COLOR_RESET; // Жёлтый
                 } else {
                     $coloredLines[] = $line;
                 }
@@ -108,16 +117,16 @@ class Gendiff
         foreach ($lines as $line) {
             if (str_starts_with(trim($line), '+')) {
                 // Добавленные свойства — зелёный
-                $coloredLines[] = "\033[32m" . $line . "с";
+                $coloredLines[] = self::COLOR_GREEN . $line . self::COLOR_RESET; // Зелёный
             } elseif (str_starts_with(trim($line), '-')) {
                 // Удалённые свойства — красный
-                $coloredLines[] = "\033[31m" . $line . "\033[0m";
+                $coloredLines[] = self::COLOR_RED . $line . self::COLOR_RESET; // Красный
             } elseif (str_starts_with(trim($line), '~')) {
                 // Изменённые свойства — жёлтый
-                $coloredLines[] = "\033[33m" . $line . "\033[0m";
+                $coloredLines[] = self::COLOR_YELLOW . $line . self::COLOR_RESET; // Жёлтый
             } elseif (str_starts_with(trim($line), '{') || str_starts_with(trim($line), '}')) {
                 // Фигурные скобки — серый
-                $coloredLines[] = "\033[90m" . $line . "\033[0m";
+                $coloredLines[] = self::COLOR_GRAY . $line . self::COLOR_RESET;
             } else {
                 $coloredLines[] = $line;
             }
@@ -131,6 +140,6 @@ class Gendiff
      */
     private static function colorizeJsonDiff(string $diff): string
     {
-        return "\033[36m" . $diff . "\033[0m"; // Голубой для JSON
+        return self::COLOR_CYAN . $diff . self::COLOR_RESET; // Голубой для JSON
     }
 }
