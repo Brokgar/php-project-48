@@ -108,7 +108,7 @@ class Gendiff
         foreach ($lines as $line) {
             if (str_starts_with(trim($line), '+')) {
                 // Добавленные свойства — зелёный
-                $coloredLines[] = "\033[32m" . $line . "\033[0m";
+                $coloredLines[] = "\033[32m" . $line . "с";
             } elseif (str_starts_with(trim($line), '-')) {
                 // Удалённые свойства — красный
                 $coloredLines[] = "\033[31m" . $line . "\033[0m";
