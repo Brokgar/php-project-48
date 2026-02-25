@@ -3,3 +3,26 @@
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=Brokgar_php-project-48&metric=bugs)](https://sonarcloud.io/summary/new_code?id=Brokgar_php-project-48)
 [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=Brokgar_php-project-48&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=Brokgar_php-project-48)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=Brokgar_php-project-48&metric=coverage)](https://sonarcloud.io/summary/new_code?id=Brokgar_php-project-48)
+
+## Prerequisites
+
+* Linux, Macos, WSL
+* PHP >=8.2
+* Xdebug
+* Make
+* Git
+
+
+## Run linter
+
+```sh
+make lint
+```
+
+See configs [php.xml](./phpcs.xml) and [phpstan.neon](./phpstan.neon)
+
+## Run tests
+
+```sh
+make test
+```
