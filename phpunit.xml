@@ -5,7 +5,8 @@
          colors="true"
          verbose="true"
          backupGlobals="false"
-         backupStaticAttributes="false">
+         backupStaticAttributes="false"
+         stopOnFailure="false">
 
     <testsuites>
         <testsuite name="Gendiff Test Suite">
@@ -13,4 +14,13 @@
         </testsuite>
     </testsuites>
 
+    <!-- Генерация отчётов для SonarQube -->
+    <logging>
+        <junit outputFile="build/logs/junit.xml"/>
+    </logging>
+    <coverage processUncoveredFiles="true">
+        <include>
+            <directory suffix=".php">src</directory>
+        </include>
+    </coverage>
 </phpunit>
