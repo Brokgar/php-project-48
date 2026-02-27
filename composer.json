@@ -1,5 +1,5 @@
 {
-  "name": "your-vendor/gendiff",
+  "name": "hexlet/code",
   "description": "PHP library for comparing configuration files and generating diffs",
   "type": "library",
   "license": "MIT",
