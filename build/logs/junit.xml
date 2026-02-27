@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuites>
-  <testsuite name="" tests="9" assertions="12" errors="0" warnings="0" failures="0" skipped="0" time="0.068874">
-    <testsuite name="Gendiff Test Suite" tests="9" assertions="12" errors="0" warnings="0" failures="0" skipped="0" time="0.068874">
-      <testsuite name="GendiffTest" file="C:\Users\office2\Documents\Projects\php-project-48\tests\GendiffTest.php" tests="3" assertions="3" errors="0" warnings="0" failures="0" skipped="0" time="0.024810">
-        <testcase name="testGenDiffStylishFormat" class="GendiffTest" classname="GendiffTest" file="C:\Users\office2\Documents\Projects\php-project-48\tests\GendiffTest.php" line="15" assertions="1" time="0.018557"/>
-        <testcase name="testGenDiffPlainFormat" class="GendiffTest" classname="GendiffTest" file="C:\Users\office2\Documents\Projects\php-project-48\tests\GendiffTest.php" line="26" assertions="1" time="0.003025"/>
-        <testcase name="testGenDiffJsonFormat" class="GendiffTest" classname="GendiffTest" file="C:\Users\office2\Documents\Projects\php-project-48\tests\GendiffTest.php" line="37" assertions="1" time="0.003228"/>
+  <testsuite name="" tests="9" assertions="12" errors="0" warnings="0" failures="0" skipped="0" time="0.120413">
+    <testsuite name="Gendiff Test Suite" tests="9" assertions="12" errors="0" warnings="0" failures="0" skipped="0" time="0.120413">
+      <testsuite name="GendiffTest" file="C:\Users\office2\Documents\Projects\php-project-48\tests\GendiffTest.php" tests="3" assertions="3" errors="0" warnings="0" failures="0" skipped="0" time="0.030979">
+        <testcase name="testGenDiffStylishFormat" class="GendiffTest" classname="GendiffTest" file="C:\Users\office2\Documents\Projects\php-project-48\tests\GendiffTest.php" line="15" assertions="1" time="0.025277"/>
+        <testcase name="testGenDiffPlainFormat" class="GendiffTest" classname="GendiffTest" file="C:\Users\office2\Documents\Projects\php-project-48\tests\GendiffTest.php" line="26" assertions="1" time="0.003237"/>
+        <testcase name="testGenDiffJsonFormat" class="GendiffTest" classname="GendiffTest" file="C:\Users\office2\Documents\Projects\php-project-48\tests\GendiffTest.php" line="37" assertions="1" time="0.002464"/>
       </testsuite>
-      <testsuite name="ParserTest" file="C:\Users\office2\Documents\Projects\php-project-48\tests\ParserTest.php" tests="6" assertions="9" errors="0" warnings="0" failures="0" skipped="0" time="0.044065">
-        <testcase name="testParseValidJsonFile" class="ParserTest" classname="ParserTest" file="C:\Users\office2\Documents\Projects\php-project-48\tests\ParserTest.php" line="17" assertions="1" time="0.001480"/>
-        <testcase name="testParseValidYamlFile" class="ParserTest" classname="ParserTest" file="C:\Users\office2\Documents\Projects\php-project-48\tests\ParserTest.php" line="33" assertions="1" time="0.015518"/>
-        <testcase name="testParseNonExistingFileThrowsException" class="ParserTest" classname="ParserTest" file="C:\Users\office2\Documents\Projects\php-project-48\tests\ParserTest.php" line="49" assertions="2" time="0.005489"/>
-        <testcase name="testUnsupportedExtensionThrowsException" class="ParserTest" classname="ParserTest" file="C:\Users\office2\Documents\Projects\php-project-48\tests\ParserTest.php" line="59" assertions="2" time="0.001998"/>
-        <testcase name="testInvalidJsonThrowsException" class="ParserTest" classname="ParserTest" file="C:\Users\office2\Documents\Projects\php-project-48\tests\ParserTest.php" line="69" assertions="2" time="0.001554"/>
-        <testcase name="testParseFileHandlesBom" class="ParserTest" classname="ParserTest" file="C:\Users\office2\Documents\Projects\php-project-48\tests\ParserTest.php" line="79" assertions="1" time="0.018025"/>
+      <testsuite name="ParserTest" file="C:\Users\office2\Documents\Projects\php-project-48\tests\ParserTest.php" tests="6" assertions="9" errors="0" warnings="0" failures="0" skipped="0" time="0.089435">
+        <testcase name="testParseValidJsonFile" class="ParserTest" classname="ParserTest" file="C:\Users\office2\Documents\Projects\php-project-48\tests\ParserTest.php" line="17" assertions="1" time="0.001171"/>
+        <testcase name="testParseValidYamlFile" class="ParserTest" classname="ParserTest" file="C:\Users\office2\Documents\Projects\php-project-48\tests\ParserTest.php" line="33" assertions="1" time="0.017634"/>
+        <testcase name="testParseNonExistingFileThrowsException" class="ParserTest" classname="ParserTest" file="C:\Users\office2\Documents\Projects\php-project-48\tests\ParserTest.php" line="49" assertions="2" time="0.008546"/>
+        <testcase name="testUnsupportedExtensionThrowsException" class="ParserTest" classname="ParserTest" file="C:\Users\office2\Documents\Projects\php-project-48\tests\ParserTest.php" line="59" assertions="2" time="0.003419"/>
+        <testcase name="testInvalidJsonThrowsException" class="ParserTest" classname="ParserTest" file="C:\Users\office2\Documents\Projects\php-project-48\tests\ParserTest.php" line="69" assertions="2" time="0.003333"/>
+        <testcase name="testParseFileHandlesBom" class="ParserTest" classname="ParserTest" file="C:\Users\office2\Documents\Projects\php-project-48\tests\ParserTest.php" line="79" assertions="1" time="0.055331"/>
       </testsuite>
     </testsuite>
   </testsuite>

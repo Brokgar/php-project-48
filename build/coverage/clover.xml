@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1772199621">
-  <project timestamp="1772199621">
+<coverage generated="1772200113">
+  <project timestamp="1772200113">
     <file name="C:\Users\office2\Documents\Projects\php-project-48\src\Exception\FileNotFoundException.php">
       <class name="Hexlet\Gendiff\Exception\FileNotFoundException" namespace="global">
         <metrics complexity="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
@@ -36,83 +36,79 @@
     </file>
     <file name="C:\Users\office2\Documents\Projects\php-project-48\src\Formatters\PlainFormatter.php">
       <class name="Hexlet\Gendiff\Formatters\PlainFormatter" namespace="global">
-        <metrics complexity="12" methods="3" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="24" coveredstatements="22" elements="27" coveredelements="23"/>
+        <metrics complexity="11" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="23" coveredstatements="21" elements="25" coveredelements="21"/>
       </class>
-      <line num="7" type="method" name="format" visibility="public" complexity="1" crap="1" count="1"/>
+      <line num="7" type="method" name="format" visibility="public" complexity="7" crap="7.01" count="1"/>
       <line num="9" type="stmt" count="1"/>
-      <line num="12" type="method" name="renderPlain" visibility="private" complexity="7" crap="7.01" count="1"/>
-      <line num="14" type="stmt" count="1"/>
+      <line num="11" type="stmt" count="1"/>
+      <line num="12" type="stmt" count="1"/>
+      <line num="13" type="stmt" count="1"/>
+      <line num="15" type="stmt" count="1"/>
       <line num="16" type="stmt" count="1"/>
       <line num="17" type="stmt" count="1"/>
       <line num="18" type="stmt" count="1"/>
+      <line num="19" type="stmt" count="1"/>
       <line num="20" type="stmt" count="1"/>
       <line num="21" type="stmt" count="1"/>
       <line num="22" type="stmt" count="1"/>
       <line num="23" type="stmt" count="1"/>
       <line num="24" type="stmt" count="1"/>
+      <line num="25" type="stmt" count="0"/>
+      <line num="29" type="stmt" count="1"/>
+      <line num="32" type="method" name="formatPlainValue" visibility="private" complexity="4" crap="4.05" count="1"/>
+      <line num="34" type="stmt" count="1"/>
+      <line num="35" type="stmt" count="0"/>
+      <line num="38" type="stmt" count="1"/>
+      <line num="39" type="stmt" count="1"/>
+      <line num="40" type="stmt" count="1"/>
+      <line num="41" type="stmt" count="1"/>
+      <line num="42" type="stmt" count="1"/>
+      <metrics loc="44" ncloc="44" classes="1" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="23" coveredstatements="21" elements="25" coveredelements="21"/>
+    </file>
+    <file name="C:\Users\office2\Documents\Projects\php-project-48\src\Formatters\StylishFormatter.php">
+      <class name="Hexlet\Gendiff\Formatters\StylishFormatter" namespace="global">
+        <metrics complexity="6" methods="2" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="37" coveredstatements="30" elements="39" coveredelements="31"/>
+      </class>
+      <line num="7" type="method" name="format" visibility="public" complexity="2" crap="2" count="1"/>
+      <line num="9" type="stmt" count="1"/>
+      <line num="10" type="stmt" count="1"/>
+      <line num="12" type="stmt" count="1"/>
+      <line num="13" type="stmt" count="1"/>
+      <line num="14" type="stmt" count="1"/>
+      <line num="16" type="stmt" count="1"/>
+      <line num="17" type="stmt" count="1"/>
+      <line num="18" type="stmt" count="1"/>
+      <line num="19" type="stmt" count="1"/>
+      <line num="20" type="stmt" count="1"/>
+      <line num="21" type="stmt" count="1"/>
+      <line num="22" type="stmt" count="1"/>
+      <line num="23" type="stmt" count="1"/>
       <line num="25" type="stmt" count="1"/>
       <line num="26" type="stmt" count="1"/>
       <line num="27" type="stmt" count="1"/>
       <line num="28" type="stmt" count="1"/>
       <line num="29" type="stmt" count="1"/>
-      <line num="30" type="stmt" count="0"/>
-      <line num="34" type="stmt" count="1"/>
-      <line num="37" type="method" name="formatPlainValue" visibility="private" complexity="4" crap="4.05" count="1"/>
-      <line num="39" type="stmt" count="1"/>
-      <line num="40" type="stmt" count="0"/>
-      <line num="43" type="stmt" count="1"/>
-      <line num="44" type="stmt" count="1"/>
-      <line num="45" type="stmt" count="1"/>
-      <line num="46" type="stmt" count="1"/>
-      <line num="47" type="stmt" count="1"/>
-      <metrics loc="49" ncloc="49" classes="1" methods="3" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="24" coveredstatements="22" elements="27" coveredelements="23"/>
-    </file>
-    <file name="C:\Users\office2\Documents\Projects\php-project-48\src\Formatters\StylishFormatter.php">
-      <class name="Hexlet\Gendiff\Formatters\StylishFormatter" namespace="global">
-        <metrics complexity="7" methods="3" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="38" coveredstatements="31" elements="41" coveredelements="33"/>
-      </class>
-      <line num="7" type="method" name="format" visibility="public" complexity="1" crap="1" count="1"/>
-      <line num="9" type="stmt" count="1"/>
-      <line num="12" type="method" name="renderStylish" visibility="private" complexity="2" crap="2" count="1"/>
-      <line num="14" type="stmt" count="1"/>
-      <line num="15" type="stmt" count="1"/>
-      <line num="17" type="stmt" count="1"/>
-      <line num="18" type="stmt" count="1"/>
-      <line num="19" type="stmt" count="1"/>
-      <line num="21" type="stmt" count="1"/>
-      <line num="22" type="stmt" count="1"/>
-      <line num="23" type="stmt" count="1"/>
-      <line num="24" type="stmt" count="1"/>
-      <line num="25" type="stmt" count="1"/>
-      <line num="26" type="stmt" count="1"/>
-      <line num="27" type="stmt" count="1"/>
-      <line num="28" type="stmt" count="1"/>
       <line num="30" type="stmt" count="1"/>
       <line num="31" type="stmt" count="1"/>
       <line num="32" type="stmt" count="1"/>
-      <line num="33" type="stmt" count="1"/>
       <line num="34" type="stmt" count="1"/>
-      <line num="35" type="stmt" count="1"/>
-      <line num="36" type="stmt" count="1"/>
       <line num="37" type="stmt" count="1"/>
-      <line num="39" type="stmt" count="1"/>
-      <line num="42" type="stmt" count="1"/>
+      <line num="38" type="stmt" count="1"/>
+      <line num="41" type="method" name="formatValue" visibility="private" complexity="4" crap="6.50" count="1"/>
       <line num="43" type="stmt" count="1"/>
-      <line num="46" type="method" name="formatValue" visibility="private" complexity="4" crap="6.50" count="1"/>
-      <line num="48" type="stmt" count="1"/>
-      <line num="49" type="stmt" count="0"/>
+      <line num="44" type="stmt" count="0"/>
+      <line num="45" type="stmt" count="0"/>
+      <line num="46" type="stmt" count="0"/>
+      <line num="47" type="stmt" count="0"/>
+      <line num="48" type="stmt" count="0"/>
       <line num="50" type="stmt" count="0"/>
       <line num="51" type="stmt" count="0"/>
-      <line num="52" type="stmt" count="0"/>
-      <line num="53" type="stmt" count="0"/>
-      <line num="55" type="stmt" count="0"/>
-      <line num="56" type="stmt" count="0"/>
-      <line num="59" type="stmt" count="1"/>
-      <line num="60" type="stmt" count="1"/>
-      <line num="61" type="stmt" count="1"/>
-      <line num="62" type="stmt" count="1"/>
-      <line num="63" type="stmt" count="1"/>
-      <metrics loc="65" ncloc="65" classes="1" methods="3" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="38" coveredstatements="31" elements="41" coveredelements="33"/>
+      <line num="54" type="stmt" count="1"/>
+      <line num="55" type="stmt" count="1"/>
+      <line num="56" type="stmt" count="1"/>
+      <line num="57" type="stmt" count="1"/>
+      <line num="58" type="stmt" count="1"/>
+      <metrics loc="60" ncloc="60" classes="1" methods="2" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="37" coveredstatements="30" elements="39" coveredelements="31"/>
     </file>
     <file name="C:\Users\office2\Documents\Projects\php-project-48\src\Gendiff.php">
       <class name="Hexlet\Gendiff\Gendiff" namespace="global">
@@ -266,6 +262,6 @@
       <line num="9" type="stmt" count="0"/>
       <metrics loc="11" ncloc="11" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="1" coveredstatements="0" elements="1" coveredelements="0"/>
     </file>
-    <metrics files="10" loc="456" ncloc="416" classes="7" methods="18" coveredmethods="5" conditionals="0" coveredconditionals="0" statements="190" coveredstatements="126" elements="208" coveredelements="131"/>
+    <metrics files="10" loc="446" ncloc="406" classes="7" methods="16" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="188" coveredstatements="124" elements="204" coveredelements="127"/>
   </project>
 </coverage>

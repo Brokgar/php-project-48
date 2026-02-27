@@ -4,12 +4,7 @@ namespace Hexlet\Gendiff\Formatters;
 
 class StylishFormatter
 {
-    public static function format(array $diff): string
-    {
-        return self::renderStylish($diff);
-    }
-
-    private static function renderStylish(array $diff, int $depth = 0): string
+    public static function format(array $diff, int $depth = 0): string
     {
         $indent = str_repeat('  ', $depth + 1);
         $lines = ['{'];

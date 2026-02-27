@@ -4,12 +4,7 @@ namespace Hexlet\Gendiff\Formatters;
 
 class PlainFormatter
 {
-    public static function format(array $diff): string
-    {
-        return self::renderPlain($diff);
-    }
-
-    private static function renderPlain(array $diff, string $path = ''): string
+    public static function format(array $diff, string $path = ''): string
     {
         $output = [];
 
