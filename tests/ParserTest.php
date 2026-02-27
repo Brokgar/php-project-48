@@ -1,5 +1,7 @@
 <?php
 
+use Hexlet\Gendiff\Exception\ParseException;
+use Hexlet\Gendiff\Exception\FileNotFoundException;
 use PHPUnit\Framework\TestCase;
 use Hexlet\Gendiff\Parser;
 
@@ -28,12 +30,28 @@ class ParserTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
+    public function testParseValidYamlFile(): void
+    {
+        $file = $this->fixturesDir . '/file1.yaml';
+
+        $result = Parser::parseFile($file);
+
+        $expected = [
+            'host' => 'hexlet.io',
+            'timeout' => 50,
+            'proxy' => '123.234.53.22',
+            'follow' => false,
+        ];
+
+        $this->assertSame($expected, $result);
+    }
+
     public function testParseNonExistingFileThrowsException(): void
     {
         $file = $this->fixturesDir . '/non-existing.json';
 
-        $this->expectException(\Exception::class);
-        $this->expectExceptionMessage("не существует");
+        $this->expectException(FileNotFoundException::class);
+        $this->expectExceptionMessage("Файл не существует");
 
         Parser::parseFile($file);
     }
@@ -42,7 +60,7 @@ class ParserTest extends TestCase
     {
         $file = $this->fixturesDir . '/unsupported.txt';
 
-        $this->expectException(\Exception::class);
+        $this->expectException(ParseException::class);
         $this->expectExceptionMessage("Неподдерживаемый формат");
 
         Parser::parseFile($file);
@@ -52,7 +70,7 @@ class ParserTest extends TestCase
     {
         $file = $this->fixturesDir . '/invalid.json';
 
-        $this->expectException(\Exception::class);
+        $this->expectException(ParseException::class);
         $this->expectExceptionMessage("Ошибка парсинга JSON");
 
         Parser::parseFile($file);

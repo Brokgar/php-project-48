@@ -2,6 +2,10 @@
 
 namespace Hexlet\Gendiff;
 
+use Hexlet\Gendiff\Exception\FileNotFoundException;
+use Hexlet\Gendiff\Exception\ParseException;
+use Symfony\Component\Yaml\Yaml;
+
 class Parser
 {
     public static function parseFile(string $filePath): array
@@ -9,12 +13,12 @@ class Parser
         $absolutePath = self::normalizePath($filePath);
 
         if (!file_exists($absolutePath)) {
-            throw new \Exception("Файл '$filePath' не существует");
+            throw new FileNotFoundException("Файл не существует");
         }
 
         $content = file_get_contents($absolutePath);
         if ($content === false) {
-            throw new \Exception("Не удалось прочитать файл: $filePath");
+            throw new FileNotFoundException("Не удалось прочитать файл: $filePath");
         }
 
         // Удаляем BOM, если присутствует
@@ -23,18 +27,21 @@ class Parser
         }
 
         $extension = pathinfo($absolutePath, PATHINFO_EXTENSION);
-        if (strtolower($extension) !== 'json') {
-            throw new \Exception("Неподдерживаемый формат: $extension");
+        $extension = strtolower($extension);
+        if ($extension !== 'json' && $extension !== 'yaml') {
+            throw new ParseException("Неподдерживаемый формат");
         }
 
-        $data = json_decode($content, true);
+        if ($extension == 'json') {
+            $data = json_decode($content, true);
+        } elseif ($extension == 'yaml') {
+            $data = Yaml::parse($content);
+        }
 
         if (json_last_error() !== JSON_ERROR_NONE) {
-            throw new \Exception(
-                "Ошибка парсинга JSON в файле '$filePath': " .
-                json_last_error_msg() .
-                "\nСодержимое файла (первые 200 символов): " .
-                substr($content, 0, 200)
+            throw new ParseException(
+                "Ошибка парсинга JSON" .
+                json_last_error_msg()
             );
         }
 

@@ -3,7 +3,8 @@
 namespace Hexlet\Gendiff;
 
 use Hexlet\Gendiff\Parser;
-use Hexlet\Gendiff\Generator;
+use Hexlet\Gendiff\Utils\ArrayComparator;
+use Hexlet\Gendiff\Formatters;
 
 class Gendiff
 {
@@ -21,16 +22,18 @@ class Gendiff
         $data1 = Parser::parseFile($file1);
         $data2 = Parser::parseFile($file2);
 
-        $format = $options['format'] ?? 'plain';
+        $format = $options['format'] ?? 'stylish';
         $color = $options['color'] ?? false;
 
-        $diff = Generator::generateDiff($data1, $data2, $format);
+        $diff = ArrayComparator::compare($data1, $data2);
+
+        $result = Formatters::format($diff, $format);
 
         if ($color) {
-            $diff = self::applyColor($diff, $format);
+            $result = self::applyColor($result, $format);
         }
 
-        return $diff;
+        return $result;
     }
 
     /**
