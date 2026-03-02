@@ -28,7 +28,7 @@ class GendiffTest extends TestCase
         $file1 = $this->fixturesDir . '/file1.json';
         $file2 = $this->fixturesDir . '/file2.json';
 
-        $result = Gendiff::compareFiles($file1, $file2, ['format' => 'plain']);
+        $result = Gendiff::compareFiles($file1, $file2, 'plain');
 
         $expected = file_get_contents($this->fixturesDir . '/result_plain.txt');
         $this->assertSame($expected, $result);
@@ -39,7 +39,7 @@ class GendiffTest extends TestCase
         $file1 = $this->fixturesDir . '/file1.json';
         $file2 = $this->fixturesDir . '/file2.json';
 
-        $result = Gendiff::compareFiles($file1, $file2, ['format' => 'json']);
+        $result = Gendiff::compareFiles($file1, $file2, 'json');
 
         $expected = file_get_contents($this->fixturesDir . '/result_json.txt');
         $this->assertSame($expected, $result);

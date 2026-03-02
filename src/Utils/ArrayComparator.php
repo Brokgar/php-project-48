@@ -10,13 +10,6 @@ class ArrayComparator
     public const CHANGED = 'changed';
     public const NESTED = 'nested';
 
-    /**
-     * Сравнивает два массива и возвращает структуру с разницей
-     *
-     * @param array $data1
-     * @param array $data2
-     * @return array
-     */
     public static function compare(array $data1, array $data2): array
     {
         $keys = array_unique(array_merge(array_keys($data1), array_keys($data2)));
@@ -41,7 +34,6 @@ class ArrayComparator
                     'value' => $data1[$key],
                 ];
             } elseif (is_array($data1[$key]) && is_array($data2[$key])) {
-                // Оба значения — массивы → рекурсивное сравнение
                 $result[] = [
                     'key' => $key,
                     'type' => self::NESTED,

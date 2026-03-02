@@ -11,7 +11,7 @@ class Formatters
     public static function format(array $diff, string $format = 'stylish'): string
     {
         return match ($format) {
-            'stylish' => StylishFormatter::format($diff),
+            'stylish' => StylishFormatter::renderStylish($diff),
             'plain' => PlainFormatter::format($diff),
             'json' => JsonFormatter::format($diff),
             default => throw new \InvalidArgumentException("Формат '$format' не поддерживается")
