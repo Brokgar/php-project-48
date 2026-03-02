@@ -8,7 +8,7 @@
 
 ## Описание
 
-Gendiff — это PHP-утилита командной строки для сравнения двух конфигурационных файлов (JSON) и отображения различий в различных форматах:
+Gendiff — это PHP-утилита командной строки для сравнения двух конфигурационных файлов (JSON, YAML) и отображения различий в различных форматах:
 
 - `plain` — простой текстовый формат
 - `stylish` — красивый формат с отступами и иконками
@@ -53,9 +53,6 @@ php bin/gendiff tests/fixtures/file1.json tests/fixtures/file2.json
 # С указанием формата вывода
 php bin/gendiff -f stylish tests/fixtures/file1.json tests/fixtures/file2.json
 
-# С цветным выводом
-php bin/gendiff --color -f stylish tests/fixtures/file1.json tests/fixtures/file2.json
-
 # Показать справку
 php bin/gendiff --help
 ```
@@ -65,12 +62,16 @@ php bin/gendiff --help
 ```php
 use Hexlet\Gendiff\Gendiff;
 
-$options = [
-    'format' => 'stylish',
-    'color' => true
-];
+$result = Gendiff::compareFiles('file1.json', 'file2.json', stylish');
+echo $result;
+```
 
-$result = Gendiff::compareFiles('file1.json', 'file2.json', $options);
+Или через функцию-хелпер:
+
+```php
+use Hexlet\Gendiff\genDiff;
+
+$result = genDiff('file1.json', 'file2.json', 'stylish');
 echo $result;
 ```
 
@@ -82,6 +83,11 @@ echo $result;
 | `stylish` | Красивый формат с отступами и символами изменений |
 | `json` | Структурированный JSON-вывод |
 
+## Поддерживаемые форматы входных файлов
+
+- JSON (`.json`)
+- YAML (`.yaml`, `.yml`)
+
 ## Разработка
 
 ### Запуск линтера
@@ -92,6 +98,16 @@ make lint
 
 Конфигурации линтеров находятся в:
 - `phpcs.xml` — для PHP_CodeSniffer
+
+### Статический анализ
+
+```bash
+# Запуск PHPStan
+make phpstan
+
+# Полный анализ (lint + phpstan)
+make analyze
+```
 
 ### Запуск тестов
 
@@ -118,6 +134,14 @@ make test
 Отчёты будут сохранены в:
 - `build/coverage/clover.xml` — покрытие кода
 - `build/logs/junit.xml` — результаты тестов
+
+## Вклад в проект
+
+См. [CONTRIBUTING.md](CONTRIBUTING.md) для информации о том, как внести свой вклад в проект.
+
+## Changelog
+
+См. [CHANGELOG.md](CHANGELOG.md) для информации об изменениях в проекте.
 
 ## Лицензия
 

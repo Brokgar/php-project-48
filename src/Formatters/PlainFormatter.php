@@ -2,8 +2,19 @@
 
 namespace Hexlet\Gendiff\Formatters;
 
-class PlainFormatter
+/**
+ * Форматтер для простого текстового вывода разницы.
+ * Показывает только изменённые свойства.
+ */
+class PlainFormatter implements FormatterInterface
 {
+    /**
+     * Форматирует разницу в простом текстовом формате.
+     *
+     * @param array $diff Структура разницы от ArrayComparator
+     * @param string $path Текущий путь к свойству
+     * @return string Отформатированная строка
+     */
     public static function format(array $diff, string $path = ''): string
     {
         $output = [];
@@ -22,13 +33,34 @@ class PlainFormatter
                 $newValue = self::formatPlainValue($node['newValue']);
                 $output[] = "Property '$currentPath' changed from $oldValue to $newValue";
             } elseif ($node['type'] === 'nested') {
-                $output[] = self::renderPlain($node['children'], $currentPath);
+                $nestedOutput = self::renderPlain($node['children'], $currentPath);
+                if ($nestedOutput !== '') {
+                    $output[] = $nestedOutput;
+                }
             }
         }
 
         return implode("\n", array_filter($output));
     }
 
+    /**
+     * Рекурсивно форматирует разницу в простой формат.
+     *
+     * @param array $diff Структура разницы
+     * @param string $path Текущий путь
+     * @return string Отформатированная строка
+     */
+    private static function renderPlain(array $diff, string $path = ''): string
+    {
+        return self::format($diff, $path);
+    }
+
+    /**
+     * Форматирует значение для простого вывода.
+     *
+     * @param mixed $value Значение для форматирования
+     * @return string Отформатированное значение
+     */
     private static function formatPlainValue($value): string
     {
         if (is_array($value)) {

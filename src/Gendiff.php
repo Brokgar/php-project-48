@@ -13,8 +13,6 @@ class Gendiff
         $data1 = Parser::parseFile($file1);
         $data2 = Parser::parseFile($file2);
 
-        // $color is not used, format is passed as parameter
-
         $diff = ArrayComparator::compare($data1, $data2);
 
         return Formatters::format($diff, $format);

@@ -1,5 +1,7 @@
 <?php
 
+namespace Tests;
+
 use Hexlet\Gendiff\Exception\ParseException;
 use Hexlet\Gendiff\Exception\FileNotFoundException;
 use PHPUnit\Framework\TestCase;
@@ -90,4 +92,3 @@ class ParserTest extends TestCase
         }
     }
 }
-
