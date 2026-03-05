@@ -31,7 +31,7 @@ class PlainFormatter implements FormatterInterface
             } elseif ($node['type'] === 'changed') {
                 $oldValue = self::formatPlainValue($node['oldValue']);
                 $newValue = self::formatPlainValue($node['newValue']);
-                $output[] = "Property '$currentPath' changed from $oldValue to $newValue";
+                $output[] = "Property '$currentPath' was updated. From $oldValue to $newValue";
             } elseif ($node['type'] === 'nested') {
                 $nestedOutput = self::renderPlain($node['children'], $currentPath);
                 if ($nestedOutput !== '') {
