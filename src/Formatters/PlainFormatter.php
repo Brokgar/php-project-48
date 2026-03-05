@@ -21,7 +21,7 @@ class PlainFormatter implements FormatterInterface
 
         foreach ($diff as $node) {
             $key = $node['key'];
-            $currentPath = $path ? "$path.$key" : $key;
+            $currentPath = $path !== '' ? "$path.$key" : $key;
 
             if ($node['type'] === 'added') {
                 $value = self::formatPlainValue($node['value']);
@@ -40,7 +40,7 @@ class PlainFormatter implements FormatterInterface
             }
         }
 
-        return implode("\n", array_filter($output));
+        return implode("\n", array_filter($output, static fn(string $line): bool => $line !== ''));
     }
 
     /**

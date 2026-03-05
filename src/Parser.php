@@ -27,7 +27,7 @@ class Parser
             $content = substr($content, 3);
         }
 
-        $extension = strtolower((string) pathinfo($absolutePath, PATHINFO_EXTENSION));
+        $extension = strtolower(pathinfo($absolutePath, PATHINFO_EXTENSION));
         if (!in_array($extension, ['json', 'yaml', 'yml'], true)) {
             throw new ParseException("Неподдерживаемый формат");
         }
@@ -67,7 +67,9 @@ class Parser
             return $path;
         }
 
-        return realpath(getcwd() . DIRECTORY_SEPARATOR . $path) ?: $path;
+        $resolvedPath = realpath(getcwd() . DIRECTORY_SEPARATOR . $path);
+
+        return $resolvedPath !== false ? $resolvedPath : $path;
     }
 
     private static function isAbsolutePath(string $path): bool
@@ -76,7 +78,7 @@ class Parser
             return true;
         }
 
-        if (DIRECTORY_SEPARATOR === '\\' && preg_match('~^[A-Z]:~i', $path)) {
+        if (DIRECTORY_SEPARATOR === '\\' && preg_match('~^[A-Z]:~i', $path) === 1) {
             return true;
         }
 
