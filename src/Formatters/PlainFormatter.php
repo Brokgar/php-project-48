@@ -40,7 +40,7 @@ class PlainFormatter implements FormatterInterface
             }
         }
 
-        return implode("\n", array_filter($output, static fn(string $line): bool => $line !== ''));
+        return implode("\n", $output);
     }
 
     /**
