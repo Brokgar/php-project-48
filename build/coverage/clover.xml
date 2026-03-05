@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1772698116">
-  <project timestamp="1772698116">
+<coverage generated="1772711982">
+  <project timestamp="1772711982">
     <file name="C:\Users\office2\Documents\Projects\php-project-48\src\Exception\FileNotFoundException.php">
       <class name="Hexlet\Gendiff\Exception\FileNotFoundException" namespace="global">
         <metrics complexity="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>

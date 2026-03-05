@@ -21,9 +21,9 @@
     "bin/gendiff"
   ],
   "scripts": {
-    "test": "vendor/bin/phpunit.bat",
-    "lint": "vendor/bin/phpcs.bat --standard=PSR12 --extensions=php src/ tests/",
-    "phpstan": "vendor/bin/phpstan.bat analyze --configuration phpstan.neon",
+    "test": "@php vendor/bin/phpunit",
+    "lint": "@php vendor/bin/phpcs --standard=PSR12 --extensions=php src/ tests/",
+    "phpstan": "@php vendor/bin/phpstan analyze --configuration phpstan.neon",
     "analyze": [
       "@lint",
       "@phpstan"
