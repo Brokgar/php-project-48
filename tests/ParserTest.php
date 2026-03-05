@@ -48,6 +48,22 @@ class ParserTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
+    public function testParseValidYmlFile(): void
+    {
+        $tempFile = tempnam(sys_get_temp_dir(), 'gendiff_yml_') . '.yml';
+        file_put_contents($tempFile, "host: hexlet.io\ntimeout: 50\n");
+
+        try {
+            $result = Parser::parseFile($tempFile);
+            $this->assertSame([
+                'host' => 'hexlet.io',
+                'timeout' => 50,
+            ], $result);
+        } finally {
+            @unlink($tempFile);
+        }
+    }
+
     public function testParseNonExistingFileThrowsException(): void
     {
         $file = $this->fixturesDir . '/non-existing.json';

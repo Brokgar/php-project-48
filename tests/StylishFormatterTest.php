@@ -26,7 +26,8 @@ class StylishFormatterTest extends TestCase
 
         $this->assertStringContainsString('{', $result);
         $this->assertStringContainsString('}', $result);
-        $this->assertStringContainsString('~ name: new', $result);
+        $this->assertStringContainsString('- name: old', $result);
+        $this->assertStringContainsString('+ name: new', $result);
     }
 
     /**
@@ -125,7 +126,8 @@ class StylishFormatterTest extends TestCase
 
         $result = StylishFormatter::renderStylish($diff);
 
-        $this->assertStringContainsString('nullable: null', $result);
+        $this->assertStringContainsString('- nullable: null', $result);
+        $this->assertStringContainsString('+ nullable: null', $result);
     }
 
     /**
@@ -144,7 +146,8 @@ class StylishFormatterTest extends TestCase
 
         $result = StylishFormatter::renderStylish($diff);
 
-        $this->assertStringContainsString('enabled: false', $result);
+        $this->assertStringContainsString('- enabled: true', $result);
+        $this->assertStringContainsString('+ enabled: false', $result);
     }
 
     /**
@@ -217,6 +220,7 @@ class StylishFormatterTest extends TestCase
 
         $this->assertStringContainsString('+ added: new', $result);
         $this->assertStringContainsString('- removed: old', $result);
-        $this->assertStringContainsString('~ changed: to', $result);
+        $this->assertStringContainsString('- changed: from', $result);
+        $this->assertStringContainsString('+ changed: to', $result);
     }
 }

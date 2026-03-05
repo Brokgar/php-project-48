@@ -16,3 +16,10 @@ function genDiff(string $pathToFile1, string $pathToFile2, string $format = 'sty
 {
     return Gendiff::compareFiles($pathToFile1, $pathToFile2, $format);
 }
+
+namespace Differ\Differ;
+
+function genDiff(string $pathToFile1, string $pathToFile2, string $format = 'stylish'): string
+{
+    return \Hexlet\Gendiff\genDiff($pathToFile1, $pathToFile2, $format);
+}

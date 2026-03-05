@@ -60,7 +60,7 @@ class PlainFormatterTest extends TestCase
 
         $result = PlainFormatter::format($diff);
 
-        $this->assertSame("Property 'status' changed from 'active' to 'inactive'", $result);
+        $this->assertSame("Property 'status' was updated. From 'active' to 'inactive'", $result);
     }
 
     /**
@@ -85,7 +85,7 @@ class PlainFormatterTest extends TestCase
 
         $result = PlainFormatter::format($diff);
 
-        $this->assertSame("Property 'database.host' changed from 'localhost' to '127.0.0.1'", $result);
+        $this->assertSame("Property 'database.host' was updated. From 'localhost' to '127.0.0.1'", $result);
     }
 
     /**
@@ -134,7 +134,7 @@ class PlainFormatterTest extends TestCase
 
         $result = PlainFormatter::format($diff);
 
-        $this->assertSame("Property 'nullable' changed from null to 'not null'", $result);
+        $this->assertSame("Property 'nullable' was updated. From null to 'not null'", $result);
     }
 
     /**
@@ -153,7 +153,7 @@ class PlainFormatterTest extends TestCase
 
         $result = PlainFormatter::format($diff);
 
-        $this->assertSame("Property 'enabled' changed from true to false", $result);
+        $this->assertSame("Property 'enabled' was updated. From true to false", $result);
     }
 
     /**
@@ -172,7 +172,7 @@ class PlainFormatterTest extends TestCase
 
         $result = PlainFormatter::format($diff);
 
-        $this->assertSame("Property 'count' changed from 10 to 20", $result);
+        $this->assertSame("Property 'count' was updated. From 10 to 20", $result);
     }
 
     /**
@@ -232,7 +232,7 @@ class PlainFormatterTest extends TestCase
         $expected = <<<'EXPECTED'
 Property 'added' was added with value: 'new'
 Property 'removed' was removed
-Property 'changed' changed from 'from' to 'to'
+Property 'changed' was updated. From 'from' to 'to'
 EXPECTED;
 
         $this->assertSame($expected, $result);

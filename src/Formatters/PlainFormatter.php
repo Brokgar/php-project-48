@@ -21,7 +21,7 @@ class PlainFormatter implements FormatterInterface
 
         foreach ($diff as $node) {
             $key = $node['key'];
-            $currentPath = $path ? "$path.$key" : $key;
+            $currentPath = $path !== '' ? "$path.$key" : $key;
 
             if ($node['type'] === 'added') {
                 $value = self::formatPlainValue($node['value']);
@@ -31,7 +31,7 @@ class PlainFormatter implements FormatterInterface
             } elseif ($node['type'] === 'changed') {
                 $oldValue = self::formatPlainValue($node['oldValue']);
                 $newValue = self::formatPlainValue($node['newValue']);
-                $output[] = "Property '$currentPath' changed from $oldValue to $newValue";
+                $output[] = "Property '$currentPath' was updated. From $oldValue to $newValue";
             } elseif ($node['type'] === 'nested') {
                 $nestedOutput = self::renderPlain($node['children'], $currentPath);
                 if ($nestedOutput !== '') {
@@ -40,7 +40,7 @@ class PlainFormatter implements FormatterInterface
             }
         }
 
-        return implode("\n", array_filter($output));
+        return implode("\n", $output);
     }
 
     /**

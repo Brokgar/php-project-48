@@ -20,8 +20,17 @@
   "bin": [
     "bin/gendiff"
   ],
+  "scripts": {
+    "test": "@php vendor/bin/phpunit",
+    "lint": "@php vendor/bin/phpcs --standard=PSR12 --extensions=php src/ tests/",
+    "phpstan": "@php vendor/bin/phpstan analyze --configuration phpstan.neon",
+    "analyze": [
+      "@lint",
+      "@phpstan"
+    ]
+  },
   "require": {
-    "php": "^8.0",
+    "php": "^8.2",
     "symfony/yaml": "^7.4"
   },
   "require-dev": {
