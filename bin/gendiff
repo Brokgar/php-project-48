@@ -46,7 +46,8 @@ function main($argv)
     }
 
     try {
-        $result = Gendiff::compareFiles($files[0], $files[1], $options);
+        $format = $options['format'] ?? 'stylish';
+        $result = Gendiff::compareFiles($files[0], $files[1], $format);
         echo $result;
     } catch (\Exception $e) {
         echo "Ошибка: " . $e->getMessage() . "\n";

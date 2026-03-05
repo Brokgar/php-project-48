@@ -1,1 +1,15 @@
 /vendor/
+
+# Build and coverage artifacts
+/build/
+/coverage/
+
+# Test and analysis caches
+/.phpunit.result.cache
+/.php-cs-fixer.cache
+/.phpstan.cache
+
+# Logs and OS files
+*.log
+.DS_Store
+Thumbs.db
