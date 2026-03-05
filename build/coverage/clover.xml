@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1772460695">
-  <project timestamp="1772460695">
+<coverage generated="1772696072">
+  <project timestamp="1772696072">
     <file name="C:\Users\office2\Documents\Projects\php-project-48\src\Exception\FileNotFoundException.php">
       <class name="Hexlet\Gendiff\Exception\FileNotFoundException" namespace="global">
         <metrics complexity="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
@@ -118,48 +118,50 @@
       <line num="11" type="method" name="compareFiles" visibility="public" complexity="1" crap="1" count="3"/>
       <line num="13" type="stmt" count="3"/>
       <line num="14" type="stmt" count="3"/>
+      <line num="16" type="stmt" count="3"/>
       <line num="18" type="stmt" count="3"/>
-      <line num="20" type="stmt" count="3"/>
-      <metrics loc="23" ncloc="22" classes="1" methods="1" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="4" coveredstatements="4" elements="5" coveredelements="5"/>
+      <metrics loc="21" ncloc="21" classes="1" methods="1" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="4" coveredstatements="4" elements="5" coveredelements="5"/>
     </file>
     <file name="C:\Users\office2\Documents\Projects\php-project-48\src\Parser.php">
       <class name="Hexlet\Gendiff\Parser" namespace="global">
-        <metrics complexity="17" methods="3" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="30" coveredstatements="26" elements="33" coveredelements="26"/>
+        <metrics complexity="20" methods="5" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="30" coveredstatements="24" elements="35" coveredelements="25"/>
       </class>
-      <line num="11" type="method" name="parseFile" visibility="public" complexity="9" crap="9" count="9"/>
-      <line num="13" type="stmt" count="9"/>
-      <line num="15" type="stmt" count="9"/>
-      <line num="16" type="stmt" count="1"/>
-      <line num="19" type="stmt" count="8"/>
-      <line num="20" type="stmt" count="8"/>
-      <line num="21" type="stmt" count="0"/>
-      <line num="25" type="stmt" count="8"/>
-      <line num="26" type="stmt" count="1"/>
-      <line num="29" type="stmt" count="8"/>
-      <line num="30" type="stmt" count="8"/>
-      <line num="31" type="stmt" count="8"/>
+      <line num="13" type="method" name="parseFile" visibility="public" complexity="6" crap="6.01" count="10"/>
+      <line num="15" type="stmt" count="10"/>
+      <line num="17" type="stmt" count="10"/>
+      <line num="18" type="stmt" count="1"/>
+      <line num="21" type="stmt" count="9"/>
+      <line num="22" type="stmt" count="9"/>
+      <line num="23" type="stmt" count="0"/>
+      <line num="26" type="stmt" count="9"/>
+      <line num="27" type="stmt" count="1"/>
+      <line num="30" type="stmt" count="9"/>
+      <line num="31" type="stmt" count="9"/>
       <line num="32" type="stmt" count="1"/>
-      <line num="35" type="stmt" count="7"/>
+      <line num="35" type="stmt" count="8"/>
       <line num="36" type="stmt" count="6"/>
-      <line num="37" type="stmt" count="1"/>
-      <line num="38" type="stmt" count="1"/>
-      <line num="41" type="stmt" count="7"/>
-      <line num="42" type="stmt" count="1"/>
-      <line num="43" type="stmt" count="1"/>
-      <line num="44" type="stmt" count="1"/>
-      <line num="45" type="stmt" count="1"/>
-      <line num="48" type="stmt" count="6"/>
-      <line num="51" type="method" name="normalizePath" visibility="private" complexity="3" crap="3.33" count="9"/>
-      <line num="53" type="stmt" count="9"/>
-      <line num="54" type="stmt" count="9"/>
-      <line num="56" type="stmt" count="0"/>
-      <line num="59" type="method" name="isAbsolutePath" visibility="private" complexity="5" crap="6.60" count="9"/>
-      <line num="61" type="stmt" count="9"/>
-      <line num="62" type="stmt" count="0"/>
-      <line num="64" type="stmt" count="9"/>
-      <line num="65" type="stmt" count="9"/>
-      <line num="67" type="stmt" count="0"/>
-      <metrics loc="70" ncloc="69" classes="1" methods="3" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="30" coveredstatements="26" elements="33" coveredelements="26"/>
+      <line num="39" type="stmt" count="2"/>
+      <line num="42" type="method" name="parseJson" visibility="private" complexity="3" crap="3" count="6"/>
+      <line num="45" type="stmt" count="6"/>
+      <line num="46" type="stmt" count="1"/>
+      <line num="47" type="stmt" count="1"/>
+      <line num="50" type="stmt" count="5"/>
+      <line num="53" type="method" name="parseYaml" visibility="private" complexity="3" crap="4.12" count="2"/>
+      <line num="56" type="stmt" count="2"/>
+      <line num="57" type="stmt" count="0"/>
+      <line num="58" type="stmt" count="0"/>
+      <line num="61" type="stmt" count="2"/>
+      <line num="64" type="method" name="normalizePath" visibility="private" complexity="3" crap="3.33" count="10"/>
+      <line num="66" type="stmt" count="10"/>
+      <line num="67" type="stmt" count="10"/>
+      <line num="70" type="stmt" count="0"/>
+      <line num="73" type="method" name="isAbsolutePath" visibility="private" complexity="5" crap="6.60" count="10"/>
+      <line num="75" type="stmt" count="10"/>
+      <line num="76" type="stmt" count="0"/>
+      <line num="79" type="stmt" count="10"/>
+      <line num="80" type="stmt" count="10"/>
+      <line num="83" type="stmt" count="0"/>
+      <metrics loc="86" ncloc="86" classes="1" methods="5" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="30" coveredstatements="24" elements="35" coveredelements="25"/>
     </file>
     <file name="C:\Users\office2\Documents\Projects\php-project-48\src\Utils\ArrayComparator.php">
       <class name="Hexlet\Gendiff\Utils\ArrayComparator" namespace="global">
@@ -209,6 +211,6 @@
       <line num="17" type="stmt" count="0"/>
       <metrics loc="19" ncloc="11" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="1" coveredstatements="0" elements="1" coveredelements="0"/>
     </file>
-    <metrics files="11" loc="412" ncloc="330" classes="7" methods="12" coveredmethods="8" conditionals="0" coveredconditionals="0" statements="136" coveredstatements="130" elements="148" coveredelements="138"/>
+    <metrics files="11" loc="426" ncloc="346" classes="7" methods="14" coveredmethods="9" conditionals="0" coveredconditionals="0" statements="136" coveredstatements="128" elements="150" coveredelements="137"/>
   </project>
 </coverage>
