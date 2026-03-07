@@ -1,4 +1,4 @@
-# Gendiff - Утилита для сравнения конфигурационных файлов
+# Gendiff - утилита для сравнения конфигурационных файлов
 
 [![Actions Status](https://github.com/Brokgar/php-project-48/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/Brokgar/php-project-48/actions)
 [![CI](https://github.com/Brokgar/php-project-48/actions/workflows/ci.yml/badge.svg)](https://github.com/Brokgar/php-project-48/actions/workflows/ci.yml)
@@ -9,55 +9,45 @@
 
 ## Описание
 
-Gendiff — это PHP-утилита командной строки для сравнения двух конфигурационных файлов (JSON, YAML) и отображения различий в различных форматах:
+`gendiff` сравнивает два файла конфигурации и показывает различия.
 
-- `plain` — простой текстовый формат
-- `stylish` — красивый формат с отступами и иконками
-- `json` — JSON-представление различий
+Поддерживаемые форматы входных файлов:
+- JSON (`.json`)
+- YAML (`.yaml`, `.yml`)
 
-Поддерживается цветной вывод при запуске в терминале, поддерживающем ANSI-коды.
+Поддерживаемые форматы вывода:
+- `stylish` (по умолчанию)
+- `plain`
+- `json`
 
 ## Требования
 
-* Операционная система: Linux, Macos, WSL или Windows с поддержкой командной строки
-* PHP >= 8.2
-* Xdebug (для покрытия кода)
-* Composer
-* Make
-* Git
+- PHP `^8.2`
+- Composer
+- Make (для команд из `Makefile`)
+- Xdebug (только для покрытия в `make test` и `make test-coverage`)
 
 ## Установка
 
-1. Клонируйте репозиторий:
-
 ```bash
 git clone https://github.com/Brokgar/php-project-48.git
-```
-
-2. Перейдите в директорию проекта:
-
-```bash
 cd php-project-48
-```
-
-3. Установите зависимости:
-
-```bash
 make install
 ```
 
 ## Использование
 
-### Через командную строку
+### CLI
 
 ```bash
-# Простое сравнение
+# Базовое сравнение (формат stylish по умолчанию)
 php bin/gendiff tests/fixtures/file1.json tests/fixtures/file2.json
 
-# С указанием формата вывода
-php bin/gendiff -f stylish tests/fixtures/file1.json tests/fixtures/file2.json
+# Явно указать формат
+php bin/gendiff -f plain tests/fixtures/file1.json tests/fixtures/file2.json
+php bin/gendiff --format json tests/fixtures/file1.yaml tests/fixtures/file2.yaml
 
-# Показать справку
+# Справка
 php bin/gendiff --help
 ```
 
@@ -70,100 +60,60 @@ $result = Gendiff::compareFiles('file1.json', 'file2.json', 'stylish');
 echo $result;
 ```
 
-Или через функцию-хелпер:
+Или через хелпер-функцию:
 
 ```php
-use Hexlet\Gendiff\genDiff;
+use function Hexlet\Gendiff\genDiff;
 
 $result = genDiff('file1.json', 'file2.json', 'stylish');
 echo $result;
 ```
 
-## Доступные форматы вывода
-
-| Формат | Описание |
-|--------|----------|
-| `plain` | Простой текст, только изменения |
-| `stylish` | Красивый формат с отступами и символами изменений |
-| `json` | Структурированный JSON-вывод |
-
-## Поддерживаемые форматы входных файлов
-
-- JSON (`.json`)
-- YAML (`.yaml`, `.yml`)
-
-## Демонстрация работы
-
-Режим plain [https://asciinema.org/a/819828](https://asciinema.org/a/819827)
-Режим stylish https://asciinema.org/a/819826
-Режим json https://asciinema.org/a/819828
-
 ## Разработка
 
-### Запуск линтера
-
 ```bash
+# Линтинг
 make lint
-```
 
-Конфигурации линтеров находятся в:
+# Автоисправление стиля
+make lint-fix
 
-- `phpcs.xml` — для PHP_CodeSniffer
+# Тесты (с формированием отчетов для Sonar)
+make test
 
-### Статический анализ
+# Тесты + HTML-отчет покрытия
+make test-coverage
 
-```bash
-# Запуск PHPStan
+# Статический анализ
 make phpstan
 
 # Полный анализ (lint + phpstan)
 make analyze
 ```
 
-Или через Composer scripts:
+Альтернатива через Composer scripts:
 
 ```bash
+composer test
 composer lint
 composer phpstan
 composer analyze
 ```
 
-### Запуск тестов
+Отчеты после `make test`/`make test-coverage`:
+- `build/coverage/clover.xml`
+- `build/logs/junit.xml`
+- `build/coverage/html` (только для `make test-coverage`)
 
-```bash
-# Запуск всех тестов
-make test
+## Демонстрация
 
-# Запуск тестов с отчётом о покрытии
-make test-coverage
-```
+- Plain: https://asciinema.org/a/819827
+- Stylish: https://asciinema.org/a/819826
+- JSON: https://asciinema.org/a/819828
 
-Также доступно:
+## Вклад
 
-```bash
-composer test
-```
-
-### Сборка и анализ кода
-
-Проект интегрирован с SonarQube/SonarCloud. Для анализа кода:
-
-```bash
-# Убедитесь, что директории build существуют
-mkdir -p build/coverage build/logs
-
-# Запустите тесты с генерацией отчётов
-make test
-```
-
-Отчёты будут сохранены в:
-
-- `build/coverage/clover.xml` — покрытие кода
-- `build/logs/junit.xml` — результаты тестов
-
-## Вклад в проект
-
-См. [CONTRIBUTING.md](CONTRIBUTING.md) для информации о том, как внести свой вклад в проект.
+Правила и процесс: [CONTRIBUTING.md](CONTRIBUTING.md)
 
 ## Лицензия
 
