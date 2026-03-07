@@ -92,6 +92,12 @@ echo $result;
 - JSON (`.json`)
 - YAML (`.yaml`, `.yml`)
 
+## Демонстрация работы
+
+Режим plain [https://asciinema.org/a/819828](https://asciinema.org/a/819827)
+Режим stylish https://asciinema.org/a/819826
+Режим json https://asciinema.org/a/819828
+
 ## Разработка
 
 ### Запуск линтера
