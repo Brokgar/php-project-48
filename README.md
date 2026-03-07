@@ -159,10 +159,6 @@ make test
 
 См. [CONTRIBUTING.md](CONTRIBUTING.md) для информации о том, как внести свой вклад в проект.
 
-## Changelog
-
-См. [CHANGELOG.md](CHANGELOG.md) для информации об изменениях в проекте.
-
 ## Лицензия
 
 MIT
