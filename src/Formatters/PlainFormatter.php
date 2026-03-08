@@ -49,7 +49,7 @@ class PlainFormatter implements FormatterInterface
             }
         }
 
-        return implode(PHP_EOL, $output);
+        return implode("\n", $output);
     }
 
     /**

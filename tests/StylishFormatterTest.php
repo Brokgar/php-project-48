@@ -231,4 +231,3 @@ class StylishFormatterTest extends TestCase
         $this->assertStringContainsString('+ changed: to', $result);
     }
 }
-

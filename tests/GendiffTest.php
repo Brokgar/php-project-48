@@ -10,6 +10,11 @@ class GendiffTest extends TestCase
     private string $fixturesDir;
     private Gendiff $gendiff;
 
+    private function normalizeLineEndings(string $value): string
+    {
+        return str_replace("\r\n", "\n", $value);
+    }
+
     protected function setUp(): void
     {
         $this->fixturesDir = __DIR__ . '/fixtures';
@@ -24,7 +29,10 @@ class GendiffTest extends TestCase
         $result = $this->gendiff->compareFiles($file1, $file2);
 
         $expected = file_get_contents($this->fixturesDir . '/result_stylish.txt');
-        $this->assertSame($expected, $result);
+        $this->assertSame(
+            $this->normalizeLineEndings($expected),
+            $this->normalizeLineEndings($result)
+        );
     }
 
     public function testGenDiffPlainFormat(): void
@@ -35,7 +43,10 @@ class GendiffTest extends TestCase
         $result = $this->gendiff->compareFiles($file1, $file2, 'plain');
 
         $expected = file_get_contents($this->fixturesDir . '/result_plain.txt');
-        $this->assertSame($expected, $result);
+        $this->assertSame(
+            $this->normalizeLineEndings($expected),
+            $this->normalizeLineEndings($result)
+        );
     }
 
     public function testGenDiffJsonFormat(): void
@@ -46,6 +57,9 @@ class GendiffTest extends TestCase
         $result = $this->gendiff->compareFiles($file1, $file2, 'json');
 
         $expected = file_get_contents($this->fixturesDir . '/result_json.txt');
-        $this->assertSame($expected, $result);
+        $this->assertSame(
+            $this->normalizeLineEndings($expected),
+            $this->normalizeLineEndings($result)
+        );
     }
 }

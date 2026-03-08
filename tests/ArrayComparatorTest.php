@@ -290,4 +290,3 @@ class ArrayComparatorTest extends TestCase
         $this->assertSame(ArrayComparator::UNCHANGED, $result[5]['type']); // string
     }
 }
-

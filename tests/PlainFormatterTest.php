@@ -245,4 +245,3 @@ EXPECTED;
         $this->assertSame($expected, $result);
     }
 }
-
