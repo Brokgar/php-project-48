@@ -2,12 +2,17 @@
 
 namespace Hexlet\Gendiff\Formatters;
 
-class StylishFormatter
+class StylishFormatter implements FormatterInterface
 {
-    public static function renderStylish(array $diff, int $depth = 0): string
+    public function format(array $diff): string
+    {
+        return $this->renderStylish($diff);
+    }
+
+    public function renderStylish(array $diff, int $depth = 0): string
     {
         $currentIndent = str_repeat(' ', $depth * 4);
-        $signIndent = $currentIndent . '  ';
+        $signIndent = sprintf('%s  ', $currentIndent);
         $lines = ['{'];
 
         foreach ($diff as $node) {
@@ -15,14 +20,14 @@ class StylishFormatter
             $type = $node['type'];
 
             if ($type === 'nested') {
-                $value = self::renderStylish($node['children'], $depth + 1);
+                $value = $this->renderStylish($node['children'], $depth + 1);
                 $lines[] = sprintf('%s  %s: %s', $signIndent, $key, $value);
                 continue;
             }
 
             if ($type === 'changed') {
-                $oldValue = self::stringify($node['oldValue'], $depth + 1);
-                $newValue = self::stringify($node['newValue'], $depth + 1);
+                $oldValue = $this->stringify($node['oldValue'], $depth + 1);
+                $newValue = $this->stringify($node['newValue'], $depth + 1);
                 $lines[] = sprintf('%s- %s: %s', $signIndent, $key, $oldValue);
                 $lines[] = sprintf('%s+ %s: %s', $signIndent, $key, $newValue);
                 continue;
@@ -34,16 +39,16 @@ class StylishFormatter
                 default => ' ',
             };
 
-            $value = self::stringify($node['value'], $depth + 1);
+            $value = $this->stringify($node['value'], $depth + 1);
             $lines[] = sprintf('%s%s %s: %s', $signIndent, $sign, $key, $value);
         }
 
-        $lines[] = $currentIndent . '}';
+        $lines[] = sprintf('%s}', $currentIndent);
 
-        return implode("\n", $lines);
+        return implode(PHP_EOL, $lines);
     }
 
-    private static function stringify(mixed $value, int $depth): string
+    private function stringify(mixed $value, int $depth): string
     {
         if (!is_array($value)) {
             return match (true) {
@@ -57,12 +62,12 @@ class StylishFormatter
         $lines = ['{'];
 
         foreach ($value as $key => $item) {
-            $formattedItem = self::stringify($item, $depth + 1);
+            $formattedItem = $this->stringify($item, $depth + 1);
             $lines[] = sprintf('%s    %s: %s', $currentIndent, (string) $key, $formattedItem);
         }
 
-        $lines[] = $currentIndent . '}';
+        $lines[] = sprintf('%s}', $currentIndent);
 
-        return implode("\n", $lines);
+        return implode(PHP_EOL, $lines);
     }
 }

@@ -15,7 +15,7 @@ class PlainFormatter implements FormatterInterface
      * @param string $path Текущий путь к свойству
      * @return string Отформатированная строка
      */
-    public static function format(array $diff, string $path = ''): string
+    public function format(array $diff, string $path = ''): string
     {
         $output = [];
 
@@ -24,23 +24,32 @@ class PlainFormatter implements FormatterInterface
             $currentPath = $path !== '' ? "$path.$key" : $key;
 
             if ($node['type'] === 'added') {
-                $value = self::formatPlainValue($node['value']);
+                $value = $this->formatPlainValue($node['value']);
                 $output[] = "Property '$currentPath' was added with value: $value";
-            } elseif ($node['type'] === 'removed') {
+                continue;
+            }
+
+            if ($node['type'] === 'removed') {
                 $output[] = "Property '$currentPath' was removed";
-            } elseif ($node['type'] === 'changed') {
-                $oldValue = self::formatPlainValue($node['oldValue']);
-                $newValue = self::formatPlainValue($node['newValue']);
+                continue;
+            }
+
+            if ($node['type'] === 'changed') {
+                $oldValue = $this->formatPlainValue($node['oldValue']);
+                $newValue = $this->formatPlainValue($node['newValue']);
                 $output[] = "Property '$currentPath' was updated. From $oldValue to $newValue";
-            } elseif ($node['type'] === 'nested') {
-                $nestedOutput = self::renderPlain($node['children'], $currentPath);
+                continue;
+            }
+
+            if ($node['type'] === 'nested') {
+                $nestedOutput = $this->renderPlain($node['children'], $currentPath);
                 if ($nestedOutput !== '') {
                     $output[] = $nestedOutput;
                 }
             }
         }
 
-        return implode("\n", $output);
+        return implode(PHP_EOL, $output);
     }
 
     /**
@@ -50,9 +59,9 @@ class PlainFormatter implements FormatterInterface
      * @param string $path Текущий путь
      * @return string Отформатированная строка
      */
-    private static function renderPlain(array $diff, string $path = ''): string
+    private function renderPlain(array $diff, string $path = ''): string
     {
-        return self::format($diff, $path);
+        return $this->format($diff, $path);
     }
 
     /**
@@ -61,7 +70,7 @@ class PlainFormatter implements FormatterInterface
      * @param mixed $value Значение для форматирования
      * @return string Отформатированное значение
      */
-    private static function formatPlainValue($value): string
+    private function formatPlainValue($value): string
     {
         if (is_array($value)) {
             return '[complex value]';

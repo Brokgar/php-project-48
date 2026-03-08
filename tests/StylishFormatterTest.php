@@ -8,6 +8,13 @@ use PHPUnit\Framework\TestCase;
 
 class StylishFormatterTest extends TestCase
 {
+    private StylishFormatter $formatter;
+
+    protected function setUp(): void
+    {
+        $this->formatter = new StylishFormatter();
+    }
+
     /**
      * Тест простого stylish вывода.
      */
@@ -22,7 +29,7 @@ class StylishFormatterTest extends TestCase
             ],
         ];
 
-        $result = StylishFormatter::renderStylish($diff);
+        $result = $this->formatter->renderStylish($diff);
 
         $this->assertStringContainsString('{', $result);
         $this->assertStringContainsString('}', $result);
@@ -43,7 +50,7 @@ class StylishFormatterTest extends TestCase
             ],
         ];
 
-        $result = StylishFormatter::renderStylish($diff);
+        $result = $this->formatter->renderStylish($diff);
 
         $this->assertStringContainsString('+ newKey: newValue', $result);
     }
@@ -61,7 +68,7 @@ class StylishFormatterTest extends TestCase
             ],
         ];
 
-        $result = StylishFormatter::renderStylish($diff);
+        $result = $this->formatter->renderStylish($diff);
 
         $this->assertStringContainsString('- oldKey: oldValue', $result);
     }
@@ -79,7 +86,7 @@ class StylishFormatterTest extends TestCase
             ],
         ];
 
-        $result = StylishFormatter::renderStylish($diff);
+        $result = $this->formatter->renderStylish($diff);
 
         $this->assertStringContainsString('sameKey: sameValue', $result);
     }
@@ -103,7 +110,7 @@ class StylishFormatterTest extends TestCase
             ],
         ];
 
-        $result = StylishFormatter::renderStylish($diff);
+        $result = $this->formatter->renderStylish($diff);
 
         $this->assertStringContainsString('{', $result);
         $this->assertStringContainsString('nested:', $result);
@@ -124,7 +131,7 @@ class StylishFormatterTest extends TestCase
             ],
         ];
 
-        $result = StylishFormatter::renderStylish($diff);
+        $result = $this->formatter->renderStylish($diff);
 
         $this->assertStringContainsString('- nullable: null', $result);
         $this->assertStringContainsString('+ nullable: null', $result);
@@ -144,7 +151,7 @@ class StylishFormatterTest extends TestCase
             ],
         ];
 
-        $result = StylishFormatter::renderStylish($diff);
+        $result = $this->formatter->renderStylish($diff);
 
         $this->assertStringContainsString('- enabled: true', $result);
         $this->assertStringContainsString('+ enabled: false', $result);
@@ -155,9 +162,9 @@ class StylishFormatterTest extends TestCase
      */
     public function testRenderStylishEmptyDiff(): void
     {
-        $result = StylishFormatter::renderStylish([]);
+        $result = $this->formatter->renderStylish([]);
 
-        $this->assertSame("{\n}", $result);
+        $this->assertSame('{' . PHP_EOL . '}', $result);
     }
 
     /**
@@ -185,7 +192,7 @@ class StylishFormatterTest extends TestCase
             ],
         ];
 
-        $result = StylishFormatter::renderStylish($diff);
+        $result = $this->formatter->renderStylish($diff);
 
         // Проверяем, что есть правильные отступы
         $lines = explode("\n", $result);
@@ -216,7 +223,7 @@ class StylishFormatterTest extends TestCase
             ],
         ];
 
-        $result = StylishFormatter::renderStylish($diff);
+        $result = $this->formatter->renderStylish($diff);
 
         $this->assertStringContainsString('+ added: new', $result);
         $this->assertStringContainsString('- removed: old', $result);
@@ -224,3 +231,4 @@ class StylishFormatterTest extends TestCase
         $this->assertStringContainsString('+ changed: to', $result);
     }
 }
+

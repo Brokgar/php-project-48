@@ -2,6 +2,8 @@
 
 namespace Hexlet\Gendiff\Utils;
 
+use function Functional\sort;
+
 class ArrayComparator
 {
     public const ADDED = 'added';
@@ -10,51 +12,53 @@ class ArrayComparator
     public const CHANGED = 'changed';
     public const NESTED = 'nested';
 
-    public static function compare(array $data1, array $data2): array
+    public function compare(array $data1, array $data2): array
     {
         $keys = array_unique(array_merge(array_keys($data1), array_keys($data2)));
-        sort($keys);
+        $sortedKeys = sort($keys, fn($left, $right) => $left <=> $right);
 
-        $result = [];
-
-        foreach ($keys as $key) {
+        return array_map(function ($key) use ($data1, $data2) {
             $inFirst = array_key_exists($key, $data1);
             $inSecond = array_key_exists($key, $data2);
 
             if (!$inFirst) {
-                $result[] = [
+                return [
                     'key' => $key,
                     'type' => self::ADDED,
                     'value' => $data2[$key],
                 ];
-            } elseif (!$inSecond) {
-                $result[] = [
+            }
+
+            if (!$inSecond) {
+                return [
                     'key' => $key,
                     'type' => self::REMOVED,
                     'value' => $data1[$key],
                 ];
-            } elseif (is_array($data1[$key]) && is_array($data2[$key])) {
-                $result[] = [
+            }
+
+            if (is_array($data1[$key]) && is_array($data2[$key])) {
+                return [
                     'key' => $key,
                     'type' => self::NESTED,
-                    'children' => self::compare($data1[$key], $data2[$key]),
+                    'children' => $this->compare($data1[$key], $data2[$key]),
                 ];
-            } elseif ($data1[$key] !== $data2[$key]) {
-                $result[] = [
+            }
+
+            if ($data1[$key] !== $data2[$key]) {
+                return [
                     'key' => $key,
                     'type' => self::CHANGED,
                     'oldValue' => $data1[$key],
                     'newValue' => $data2[$key],
                 ];
-            } else {
-                $result[] = [
-                    'key' => $key,
-                    'type' => self::UNCHANGED,
-                    'value' => $data1[$key],
-                ];
             }
-        }
 
-        return $result;
+            return [
+                'key' => $key,
+                'type' => self::UNCHANGED,
+                'value' => $data1[$key],
+            ];
+        }, $sortedKeys);
     }
 }

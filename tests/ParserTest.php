@@ -10,17 +10,19 @@ use Hexlet\Gendiff\Parser;
 class ParserTest extends TestCase
 {
     private string $fixturesDir;
+    private Parser $parser;
 
     protected function setUp(): void
     {
         $this->fixturesDir = __DIR__ . '/fixtures';
+        $this->parser = new Parser();
     }
 
     public function testParseValidJsonFile(): void
     {
         $file = $this->fixturesDir . '/file1.json';
 
-        $result = Parser::parseFile($file);
+        $result = $this->parser->parseFile($file);
 
         $expected = [
             'host' => 'hexlet.io',
@@ -36,7 +38,7 @@ class ParserTest extends TestCase
     {
         $file = $this->fixturesDir . '/file1.yaml';
 
-        $result = Parser::parseFile($file);
+        $result = $this->parser->parseFile($file);
 
         $expected = [
             'host' => 'hexlet.io',
@@ -54,7 +56,7 @@ class ParserTest extends TestCase
         file_put_contents($tempFile, "host: hexlet.io\ntimeout: 50\n");
 
         try {
-            $result = Parser::parseFile($tempFile);
+            $result = $this->parser->parseFile($tempFile);
             $this->assertSame([
                 'host' => 'hexlet.io',
                 'timeout' => 50,
@@ -71,7 +73,7 @@ class ParserTest extends TestCase
         $this->expectException(FileNotFoundException::class);
         $this->expectExceptionMessage("Файл не существует");
 
-        Parser::parseFile($file);
+        $this->parser->parseFile($file);
     }
 
     public function testUnsupportedExtensionThrowsException(): void
@@ -81,7 +83,7 @@ class ParserTest extends TestCase
         $this->expectException(ParseException::class);
         $this->expectExceptionMessage("Неподдерживаемый формат");
 
-        Parser::parseFile($file);
+        $this->parser->parseFile($file);
     }
 
     public function testInvalidJsonThrowsException(): void
@@ -91,7 +93,7 @@ class ParserTest extends TestCase
         $this->expectException(ParseException::class);
         $this->expectExceptionMessage("Ошибка парсинга JSON");
 
-        Parser::parseFile($file);
+        $this->parser->parseFile($file);
     }
 
     public function testParseFileHandlesBom(): void
@@ -101,8 +103,23 @@ class ParserTest extends TestCase
         file_put_contents($tempFile, $content);
 
         try {
-            $result = Parser::parseFile($tempFile);
+            $result = $this->parser->parseFile($tempFile);
             $this->assertSame(['key' => 'value'], $result);
+        } finally {
+            @unlink($tempFile);
+        }
+    }
+
+    public function testParseFileHandlesUtf16LeBom(): void
+    {
+        $tempFile = tempnam(sys_get_temp_dir(), 'gendiff_utf16_') . '.json';
+        $utf8Json = (string) json_encode(['key' => 'value', 'num' => 1]);
+        $utf16Le = "\xFF\xFE" . mb_convert_encoding($utf8Json, 'UTF-16LE', 'UTF-8');
+        file_put_contents($tempFile, $utf16Le);
+
+        try {
+            $result = $this->parser->parseFile($tempFile);
+            $this->assertSame(['key' => 'value', 'num' => 1], $result);
         } finally {
             @unlink($tempFile);
         }

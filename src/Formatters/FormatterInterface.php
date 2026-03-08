@@ -13,5 +13,5 @@ interface FormatterInterface
      * @param array $diff Структура разницы от ArrayComparator
      * @return string Отформатированная строка
      */
-    public static function format(array $diff): string;
+    public function format(array $diff): string;
 }

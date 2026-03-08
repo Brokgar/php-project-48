@@ -1,88 +1,81 @@
 #!/usr/bin/env php
 <?php
 
-namespace Hexlet\Gendiff;
+$autoloadPaths = [
+    __DIR__ . '/../vendor/autoload.php',
+    __DIR__ . '/../../../autoload.php',
+];
 
-require_once __DIR__ . '/../vendor/autoload.php';
+$autoloadLoaded = false;
+foreach ($autoloadPaths as $autoloadPath) {
+    if (is_file($autoloadPath)) {
+        require_once $autoloadPath;
+        $autoloadLoaded = true;
+        break;
+    }
+}
+
+if (!$autoloadLoaded) {
+    fwrite(STDERR, 'Error: composer autoload file not found' . PHP_EOL);
+    exit(1);
+}
+
+function getCliDescription(): string
+{
+    return <<<DOC
+Compares two configuration files and shows a diff.
+
+Usage:
+  gendiff [options] [<file1> <file2>]
+
+Options:
+  -h --help             Show this help
+  -f --format=<type>    Output format [default: stylish]
+DOC;
+}
 
 function main(array $argv): int
 {
-    array_shift($argv);
+    $exitCode = 0;
 
-    if (in_array('-h', $argv, true) || in_array('--help', $argv, true)) {
+    $parsed = \Docopt::handle(getCliDescription(), [
+        'argv' => array_slice($argv, 1),
+        'help' => false,
+        'exit' => false,
+    ]);
+
+    if (!$parsed->success) {
+        fwrite(STDERR, trim($parsed->output) . PHP_EOL);
+        $exitCode = 1;
+    } elseif ($parsed['--help']) {
         showHelp();
-        return 0;
-    }
-
-    $options = [];
-    $files = [];
-
-    for ($i = 0, $count = count($argv); $i < $count; $i++) {
-        $arg = $argv[$i];
-
-        if ($arg === '-f' || $arg === '--format') {
-            if ($i + 1 < $count) {
-                $options['format'] = $argv[$i + 1];
-                $i++;
-                continue;
-            }
-
-            fwrite(STDERR, "Error: option -f/--format requires a value\n");
-            return 1;
+    } elseif ($parsed['<file1>'] === null || $parsed['<file2>'] === null) {
+        fwrite(STDERR, 'Error: exactly two files are required' . PHP_EOL);
+        fwrite(STDERR, 'Usage: gendiff [OPTIONS] <file1> <file2>' . PHP_EOL);
+        $exitCode = 1;
+    } else {
+        try {
+            $format = (string) $parsed['--format'];
+            $gendiff = new \Hexlet\Gendiff\Gendiff();
+            $result = $gendiff->compareFiles(
+                (string) $parsed['<file1>'],
+                (string) $parsed['<file2>'],
+                $format
+            );
+            echo $result;
+        } catch (\Throwable $e) {
+            fwrite(STDERR, "Error: {$e->getMessage()}" . PHP_EOL);
+            $exitCode = 1;
         }
-
-        if ($arg === '--color') {
-            continue;
-        }
-
-        if (str_starts_with($arg, '-')) {
-            fwrite(STDERR, "Error: unknown option '{$arg}'\n");
-            return 1;
-        }
-
-        $files[] = $arg;
     }
 
-    if (count($files) !== 2) {
-        fwrite(STDERR, "Error: exactly two files are required\n");
-        fwrite(STDERR, "Usage: gendiff [OPTIONS] <file1> <file2>\n");
-        return 1;
-    }
-
-    try {
-        $format = $options['format'] ?? 'stylish';
-        $result = Gendiff::compareFiles($files[0], $files[1], $format);
-        echo $result;
-        return 0;
-    } catch (\Throwable $e) {
-        fwrite(STDERR, "Error: {$e->getMessage()}\n");
-        return 1;
-    }
+    return $exitCode;
 }
 
 function showHelp(): void
 {
-    $helpText = <<<HELP
-Usage: gendiff [OPTIONS] <file1> <file2>
-
-Compares two configuration files and shows a diff.
-
-OPTIONS:
-  -h, --help             Show this help
-  -f, --format <type>    Output format (plain, stylish, json)
-
-EXAMPLES:
-  gendiff file1.json file2.json
-  gendiff -f stylish config1.json config2.json --color
-  gendiff --help
-
-FORMATS:
-  plain   - plain text output with changed properties
-  stylish - visual nested output
-  json    - JSON representation of diff tree
-HELP;
-
-    echo $helpText . "\n";
+    echo getCliDescription() . PHP_EOL;
 }
 
-exit(main($argv));
+$exitCode = main($argv);
+exit($exitCode);

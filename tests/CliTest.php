@@ -66,6 +66,6 @@ class CliTest extends TestCase
         $exitCode = 0;
         exec($command, $output, $exitCode);
 
-        return [implode("\n", $output), $exitCode];
+        return [implode(PHP_EOL, $output), $exitCode];
     }
 }

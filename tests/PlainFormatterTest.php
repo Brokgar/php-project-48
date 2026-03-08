@@ -8,6 +8,13 @@ use PHPUnit\Framework\TestCase;
 
 class PlainFormatterTest extends TestCase
 {
+    private PlainFormatter $formatter;
+
+    protected function setUp(): void
+    {
+        $this->formatter = new PlainFormatter();
+    }
+
     /**
      * Тест добавления свойства.
      */
@@ -21,7 +28,7 @@ class PlainFormatterTest extends TestCase
             ],
         ];
 
-        $result = PlainFormatter::format($diff);
+        $result = $this->formatter->format($diff);
 
         $this->assertSame("Property 'name' was added with value: 'new value'", $result);
     }
@@ -39,7 +46,7 @@ class PlainFormatterTest extends TestCase
             ],
         ];
 
-        $result = PlainFormatter::format($diff);
+        $result = $this->formatter->format($diff);
 
         $this->assertSame("Property 'oldKey' was removed", $result);
     }
@@ -58,7 +65,7 @@ class PlainFormatterTest extends TestCase
             ],
         ];
 
-        $result = PlainFormatter::format($diff);
+        $result = $this->formatter->format($diff);
 
         $this->assertSame("Property 'status' was updated. From 'active' to 'inactive'", $result);
     }
@@ -83,7 +90,7 @@ class PlainFormatterTest extends TestCase
             ],
         ];
 
-        $result = PlainFormatter::format($diff);
+        $result = $this->formatter->format($diff);
 
         $this->assertSame("Property 'database.host' was updated. From 'localhost' to '127.0.0.1'", $result);
     }
@@ -113,7 +120,7 @@ class PlainFormatterTest extends TestCase
             ],
         ];
 
-        $result = PlainFormatter::format($diff);
+        $result = $this->formatter->format($diff);
 
         $this->assertSame("Property 'level1.level2.key' was added with value: 'value'", $result);
     }
@@ -132,7 +139,7 @@ class PlainFormatterTest extends TestCase
             ],
         ];
 
-        $result = PlainFormatter::format($diff);
+        $result = $this->formatter->format($diff);
 
         $this->assertSame("Property 'nullable' was updated. From null to 'not null'", $result);
     }
@@ -151,7 +158,7 @@ class PlainFormatterTest extends TestCase
             ],
         ];
 
-        $result = PlainFormatter::format($diff);
+        $result = $this->formatter->format($diff);
 
         $this->assertSame("Property 'enabled' was updated. From true to false", $result);
     }
@@ -170,7 +177,7 @@ class PlainFormatterTest extends TestCase
             ],
         ];
 
-        $result = PlainFormatter::format($diff);
+        $result = $this->formatter->format($diff);
 
         $this->assertSame("Property 'count' was updated. From 10 to 20", $result);
     }
@@ -188,7 +195,7 @@ class PlainFormatterTest extends TestCase
             ],
         ];
 
-        $result = PlainFormatter::format($diff);
+        $result = $this->formatter->format($diff);
 
         $this->assertSame("Property 'settings' was added with value: [complex value]", $result);
     }
@@ -198,7 +205,7 @@ class PlainFormatterTest extends TestCase
      */
     public function testFormatEmptyDiff(): void
     {
-        $result = PlainFormatter::format([]);
+        $result = $this->formatter->format([]);
 
         $this->assertSame('', $result);
     }
@@ -227,7 +234,7 @@ class PlainFormatterTest extends TestCase
             ],
         ];
 
-        $result = PlainFormatter::format($diff);
+        $result = $this->formatter->format($diff);
 
         $expected = <<<'EXPECTED'
 Property 'added' was added with value: 'new'
@@ -238,3 +245,4 @@ EXPECTED;
         $this->assertSame($expected, $result);
     }
 }
+

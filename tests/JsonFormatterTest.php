@@ -8,6 +8,13 @@ use PHPUnit\Framework\TestCase;
 
 class JsonFormatterTest extends TestCase
 {
+    private JsonFormatter $formatter;
+
+    protected function setUp(): void
+    {
+        $this->formatter = new JsonFormatter();
+    }
+
     /**
      * Тест простого JSON вывода.
      */
@@ -22,7 +29,7 @@ class JsonFormatterTest extends TestCase
             ],
         ];
 
-        $result = JsonFormatter::format($diff);
+        $result = $this->formatter->format($diff);
         $expected = <<<'JSON'
 [
     {
@@ -56,7 +63,7 @@ JSON;
             ],
         ];
 
-        $result = JsonFormatter::format($diff);
+        $result = $this->formatter->format($diff);
         $decoded = json_decode($result, true);
 
         $this->assertIsArray($decoded);
@@ -80,7 +87,7 @@ JSON;
             ],
         ];
 
-        $result = JsonFormatter::format($diff);
+        $result = $this->formatter->format($diff);
 
         $this->assertStringContainsString('Привет', $result);
         $this->assertStringContainsString('Мир', $result);
@@ -91,7 +98,7 @@ JSON;
      */
     public function testFormatEmptyDiff(): void
     {
-        $result = JsonFormatter::format([]);
+        $result = $this->formatter->format([]);
 
         $this->assertSame('[]', $result);
     }

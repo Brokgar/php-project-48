@@ -7,6 +7,12 @@ use PHPUnit\Framework\TestCase;
 
 class ArrayComparatorTest extends TestCase
 {
+    private ArrayComparator $comparator;
+
+    protected function setUp(): void
+    {
+        $this->comparator = new ArrayComparator();
+    }
     /**
      * Тест сравнения одинаковых массивов.
      */
@@ -14,7 +20,7 @@ class ArrayComparatorTest extends TestCase
     {
         $data = ['key' => 'value', 'number' => 42];
 
-        $result = ArrayComparator::compare($data, $data);
+        $result = $this->comparator->compare($data, $data);
 
         $expected = [
             [
@@ -37,7 +43,7 @@ class ArrayComparatorTest extends TestCase
      */
     public function testCompareEmptyArrays(): void
     {
-        $result = ArrayComparator::compare([], []);
+        $result = $this->comparator->compare([], []);
 
         $this->assertSame([], $result);
     }
@@ -50,7 +56,7 @@ class ArrayComparatorTest extends TestCase
         $data1 = ['old' => 'value'];
         $data2 = ['old' => 'value', 'new' => 'added'];
 
-        $result = ArrayComparator::compare($data1, $data2);
+        $result = $this->comparator->compare($data1, $data2);
 
         $expected = [
             [
@@ -76,7 +82,7 @@ class ArrayComparatorTest extends TestCase
         $data1 = ['keep' => 'value', 'remove' => 'gone'];
         $data2 = ['keep' => 'value'];
 
-        $result = ArrayComparator::compare($data1, $data2);
+        $result = $this->comparator->compare($data1, $data2);
 
         $expected = [
             [
@@ -102,7 +108,7 @@ class ArrayComparatorTest extends TestCase
         $data1 = ['key' => 'old'];
         $data2 = ['key' => 'new'];
 
-        $result = ArrayComparator::compare($data1, $data2);
+        $result = $this->comparator->compare($data1, $data2);
 
         $expected = [
             [
@@ -124,7 +130,7 @@ class ArrayComparatorTest extends TestCase
         $data1 = ['nested' => ['key1' => 'value1']];
         $data2 = ['nested' => ['key1' => 'value1', 'key2' => 'value2']];
 
-        $result = ArrayComparator::compare($data1, $data2);
+        $result = $this->comparator->compare($data1, $data2);
 
         $expected = [
             [
@@ -156,7 +162,7 @@ class ArrayComparatorTest extends TestCase
         $data1 = ['level1' => ['level2' => ['level3' => ['key' => 'value1']]]];
         $data2 = ['level1' => ['level2' => ['level3' => ['key' => 'value2']]]];
 
-        $result = ArrayComparator::compare($data1, $data2);
+        $result = $this->comparator->compare($data1, $data2);
 
         $this->assertCount(1, $result);
         $this->assertSame('level1', $result[0]['key']);
@@ -188,7 +194,7 @@ class ArrayComparatorTest extends TestCase
         $data1 = ['zebra' => 'z', 'alpha' => 'a'];
         $data2 = ['zebra' => 'z', 'alpha' => 'a'];
 
-        $result = ArrayComparator::compare($data1, $data2);
+        $result = $this->comparator->compare($data1, $data2);
 
         $this->assertSame('alpha', $result[0]['key']);
         $this->assertSame('zebra', $result[1]['key']);
@@ -202,7 +208,7 @@ class ArrayComparatorTest extends TestCase
         $data1 = ['key' => null];
         $data2 = ['key' => 'value'];
 
-        $result = ArrayComparator::compare($data1, $data2);
+        $result = $this->comparator->compare($data1, $data2);
 
         $expected = [
             [
@@ -224,7 +230,7 @@ class ArrayComparatorTest extends TestCase
         $data1 = ['flag' => true];
         $data2 = ['flag' => false];
 
-        $result = ArrayComparator::compare($data1, $data2);
+        $result = $this->comparator->compare($data1, $data2);
 
         $expected = [
             [
@@ -260,7 +266,7 @@ class ArrayComparatorTest extends TestCase
             'array' => [1, 2, 3],
         ];
 
-        $result = ArrayComparator::compare($data1, $data2);
+        $result = $this->comparator->compare($data1, $data2);
 
         $this->assertCount(6, $result);
 
@@ -284,3 +290,4 @@ class ArrayComparatorTest extends TestCase
         $this->assertSame(ArrayComparator::UNCHANGED, $result[5]['type']); // string
     }
 }
+
