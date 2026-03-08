@@ -6,14 +6,18 @@ use Hexlet\Gendiff\Utils\ArrayComparator;
 
 class Gendiff
 {
+    private Parser $parser;
+    private ArrayComparator $comparator;
+    private Formatters $formatters;
+
     public function __construct(
-        private ?Parser $parser = null,
-        private ?ArrayComparator $comparator = null,
-        private ?Formatters $formatters = null
+        ?Parser $parser = null,
+        ?ArrayComparator $comparator = null,
+        ?Formatters $formatters = null
     ) {
-        $this->parser ??= new Parser();
-        $this->comparator ??= new ArrayComparator();
-        $this->formatters ??= new Formatters();
+        $this->parser = $parser ?? new Parser();
+        $this->comparator = $comparator ?? new ArrayComparator();
+        $this->formatters = $formatters ?? new Formatters();
     }
 
     public function compareFiles(string $file1, string $file2, string $format = 'stylish'): string

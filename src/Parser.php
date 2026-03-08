@@ -4,12 +4,15 @@ namespace Hexlet\Gendiff;
 
 class Parser
 {
+    private FileReader $fileReader;
+    private DataParser $dataParser;
+
     public function __construct(
-        private ?FileReader $fileReader = null,
-        private ?DataParser $dataParser = null
+        ?FileReader $fileReader = null,
+        ?DataParser $dataParser = null
     ) {
-        $this->fileReader ??= new FileReader();
-        $this->dataParser ??= new DataParser();
+        $this->fileReader = $fileReader ?? new FileReader();
+        $this->dataParser = $dataParser ?? new DataParser();
     }
 
     public function parseFile(string $filePath): array

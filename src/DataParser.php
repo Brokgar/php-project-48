@@ -53,7 +53,10 @@ class DataParser
 
         $normalizedContent = $this->normalizeContent($content);
 
-        return $this->{$parserMethod}($normalizedContent, $asArray);
+        return match ($parserMethod) {
+            'parseJson' => $this->parseJson($normalizedContent, $asArray),
+            'parseYaml' => $this->parseYaml($normalizedContent, $asArray),
+        };
     }
 
     private function normalizeContent(string $content): string
@@ -67,7 +70,11 @@ class DataParser
         foreach ($boms as $bom => $config) {
             if (str_starts_with($content, $bom)) {
                 $content = substr($content, $config['length']);
-                return $config['encoding'] ? mb_convert_encoding($content, 'UTF-8', $config['encoding']) : $content;
+                $encoding = $config['encoding'];
+
+                return is_string($encoding)
+                    ? mb_convert_encoding($content, 'UTF-8', $encoding)
+                    : $content;
             }
         }
 
