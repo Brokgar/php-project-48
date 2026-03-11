@@ -26,7 +26,8 @@ function getCliDescription(): string
 Compares two configuration files and shows a diff.
 
 Usage:
-  gendiff [options] [<file1> <file2>]
+  gendiff [options] <file1> <file2>
+  gendiff (-h | --help)
 
 Options:
   -h --help             Show this help
@@ -36,45 +37,35 @@ DOC;
 
 function main(array $argv): int
 {
-    $exitCode = 0;
-
-    $parsed = \Docopt::handle(getCliDescription(), [
-        'argv' => array_slice($argv, 1),
-        'help' => false,
-        'exit' => false,
-    ]);
-
-    if (!$parsed->success) {
-        fwrite(STDERR, trim($parsed->output) . PHP_EOL);
-        $exitCode = 1;
-    } elseif ($parsed['--help']) {
-        showHelp();
-    } elseif ($parsed['<file1>'] === null || $parsed['<file2>'] === null) {
-        fwrite(STDERR, 'Error: exactly two files are required' . PHP_EOL);
-        fwrite(STDERR, 'Usage: gendiff [OPTIONS] <file1> <file2>' . PHP_EOL);
-        $exitCode = 1;
-    } else {
-        try {
-            $format = (string) $parsed['--format'];
-            $gendiff = new \Hexlet\Gendiff\Gendiff();
-            $result = $gendiff->compareFiles(
-                (string) $parsed['<file1>'],
-                (string) $parsed['<file2>'],
-                $format
-            );
-            echo $result;
-        } catch (\Throwable $e) {
-            fwrite(STDERR, "Error: {$e->getMessage()}" . PHP_EOL);
-            $exitCode = 1;
-        }
-    }
-
-    return $exitCode;
+    $parsed = parseCliArguments($argv);
+    return runComparison($parsed);
 }
 
-function showHelp(): void
+function parseCliArguments(array $argv): \Docopt\Response
 {
-    echo getCliDescription() . PHP_EOL;
+    return \Docopt::handle(getCliDescription(), [
+        'argv' => array_slice($argv, 1),
+        'help' => true,
+        'exit' => true,
+    ]);
+}
+
+function runComparison(\Docopt\Response $parsed): int
+{
+    try {
+        $format = (string) $parsed['--format'];
+        $gendiff = new \Hexlet\Gendiff\Gendiff();
+        echo $gendiff->compareFiles(
+            (string) $parsed['<file1>'],
+            (string) $parsed['<file2>'],
+            $format
+        );
+    } catch (\Throwable $e) {
+        fwrite(STDERR, "Error: {$e->getMessage()}" . PHP_EOL);
+        return 1;
+    }
+
+    return 0;
 }
 
 $exitCode = main($argv);

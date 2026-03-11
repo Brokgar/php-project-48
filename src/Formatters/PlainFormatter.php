@@ -2,19 +2,8 @@
 
 namespace Hexlet\Gendiff\Formatters;
 
-/**
- * Форматтер для простого текстового вывода разницы.
- * Показывает только изменённые свойства.
- */
 class PlainFormatter implements FormatterInterface
 {
-    /**
-     * Форматирует разницу в простом текстовом формате.
-     *
-     * @param array $diff Структура разницы от ArrayComparator
-     * @param string $path Текущий путь к свойству
-     * @return string Отформатированная строка
-     */
     public function format(array $diff, string $path = ''): string
     {
         $output = [];
@@ -52,25 +41,12 @@ class PlainFormatter implements FormatterInterface
         return implode("\n", $output);
     }
 
-    /**
-     * Рекурсивно форматирует разницу в простой формат.
-     *
-     * @param array $diff Структура разницы
-     * @param string $path Текущий путь
-     * @return string Отформатированная строка
-     */
     private function renderPlain(array $diff, string $path = ''): string
     {
         return $this->format($diff, $path);
     }
 
-    /**
-     * Форматирует значение для простого вывода.
-     *
-     * @param mixed $value Значение для форматирования
-     * @return string Отформатированное значение
-     */
-    private function formatPlainValue($value): string
+    private function formatPlainValue(mixed $value): string
     {
         if (is_array($value)) {
             return '[complex value]';
@@ -79,7 +55,7 @@ class PlainFormatter implements FormatterInterface
         return match (true) {
             is_null($value) => 'null',
             is_bool($value) => $value ? 'true' : 'false',
-            default => is_string($value) ? "'$value'" : (string)$value
+            default => is_string($value) ? "'$value'" : (string) $value,
         };
     }
 }

@@ -2,21 +2,21 @@
 
 namespace Hexlet\Gendiff;
 
-use Hexlet\Gendiff\Utils\ArrayComparator;
+use Hexlet\Gendiff\Utils\DiffTreeBuilder;
 
 class Gendiff
 {
     private Parser $parser;
-    private ArrayComparator $comparator;
+    private DiffTreeBuilder $diffTreeBuilder;
     private Formatters $formatters;
 
     public function __construct(
         ?Parser $parser = null,
-        ?ArrayComparator $comparator = null,
+        ?DiffTreeBuilder $diffTreeBuilder = null,
         ?Formatters $formatters = null
     ) {
         $this->parser = $parser ?? new Parser();
-        $this->comparator = $comparator ?? new ArrayComparator();
+        $this->diffTreeBuilder = $diffTreeBuilder ?? new DiffTreeBuilder();
         $this->formatters = $formatters ?? new Formatters();
     }
 
@@ -25,7 +25,7 @@ class Gendiff
         $data1 = $this->parser->parseFile($file1);
         $data2 = $this->parser->parseFile($file2);
 
-        $diff = $this->comparator->compare($data1, $data2);
+        $diff = $this->diffTreeBuilder->compare($data1, $data2);
 
         return $this->formatters->format($diff, $format);
     }

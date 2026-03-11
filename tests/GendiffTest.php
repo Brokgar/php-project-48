@@ -3,6 +3,7 @@
 namespace Tests;
 
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Hexlet\Gendiff\Gendiff;
 
 class GendiffTest extends TestCase
@@ -21,45 +22,41 @@ class GendiffTest extends TestCase
         $this->gendiff = new Gendiff();
     }
 
-    public function testGenDiffStylishFormat(): void
+    #[DataProvider('compareFilesProvider')]
+    public function testGenDiffFormats(string $inputExtension, ?string $format, string $expectedFixture): void
     {
-        $file1 = $this->fixturesDir . '/file1.json';
-        $file2 = $this->fixturesDir . '/file2.json';
+        $file1 = $this->fixturesDir . "/file1.{$inputExtension}";
+        $file2 = $this->fixturesDir . "/file2.{$inputExtension}";
 
-        $result = $this->gendiff->compareFiles($file1, $file2);
+        $result = $format === null
+            ? $this->gendiff->compareFiles($file1, $file2)
+            : $this->gendiff->compareFiles($file1, $file2, $format);
 
-        $expected = file_get_contents($this->fixturesDir . '/result_stylish.txt');
         $this->assertSame(
-            $this->normalizeLineEndings($expected),
+            $this->normalizeFixture($expectedFixture),
             $this->normalizeLineEndings($result)
         );
     }
 
-    public function testGenDiffPlainFormat(): void
+    /**
+     * @return array<string, array{0: string, 1: string|null, 2: string}>
+     */
+    public static function compareFilesProvider(): array
     {
-        $file1 = $this->fixturesDir . '/file1.json';
-        $file2 = $this->fixturesDir . '/file2.json';
-
-        $result = $this->gendiff->compareFiles($file1, $file2, 'plain');
-
-        $expected = file_get_contents($this->fixturesDir . '/result_plain.txt');
-        $this->assertSame(
-            $this->normalizeLineEndings($expected),
-            $this->normalizeLineEndings($result)
-        );
+        return [
+            'json default stylish' => ['json', null, 'result_stylish.txt'],
+            'json explicit stylish' => ['json', 'stylish', 'result_stylish.txt'],
+            'json plain' => ['json', 'plain', 'result_plain.txt'],
+            'json json' => ['json', 'json', 'result_json.txt'],
+            'yaml default stylish' => ['yaml', null, 'result_stylish.txt'],
+            'yaml explicit stylish' => ['yaml', 'stylish', 'result_stylish.txt'],
+            'yaml plain' => ['yaml', 'plain', 'result_plain.txt'],
+            'yaml json' => ['yaml', 'json', 'result_json.txt'],
+        ];
     }
 
-    public function testGenDiffJsonFormat(): void
+    private function normalizeFixture(string $fixtureName): string
     {
-        $file1 = $this->fixturesDir . '/file1.json';
-        $file2 = $this->fixturesDir . '/file2.json';
-
-        $result = $this->gendiff->compareFiles($file1, $file2, 'json');
-
-        $expected = file_get_contents($this->fixturesDir . '/result_json.txt');
-        $this->assertSame(
-            $this->normalizeLineEndings($expected),
-            $this->normalizeLineEndings($result)
-        );
+        return $this->normalizeLineEndings((string) file_get_contents($this->fixturesDir . '/' . $fixtureName));
     }
 }

@@ -20,6 +20,7 @@ class CliTest extends TestCase
         $file1 = $this->fixturesDir . '/file1.json';
         $file2 = $this->fixturesDir . '/file2.json';
         $expected = (string) file_get_contents($this->fixturesDir . '/result_plain.txt');
+        $expected = str_replace("\n", PHP_EOL, $expected);
 
         [$output, $exitCode] = $this->runCli(['-f', 'plain', $file1, $file2]);
 
@@ -43,7 +44,8 @@ class CliTest extends TestCase
         [$output, $exitCode] = $this->runCli([]);
 
         $this->assertSame(1, $exitCode);
-        $this->assertStringContainsString('exactly two files are required', $output);
+        $this->assertStringContainsString('Usage:', $output);
+        $this->assertStringContainsString('gendiff [options] <file1> <file2>', $output);
     }
 
     /**

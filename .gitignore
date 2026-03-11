@@ -6,6 +6,7 @@
 
 # Test and analysis caches
 /.phpunit.result.cache
+/.phpunit.cache/
 /.php-cs-fixer.cache
 /.phpstan.cache
 

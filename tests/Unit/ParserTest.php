@@ -14,7 +14,7 @@ class ParserTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->fixturesDir = __DIR__ . '/fixtures';
+        $this->fixturesDir = dirname(__DIR__) . '/fixtures';
         $this->parser = new Parser();
     }
 
@@ -71,7 +71,7 @@ class ParserTest extends TestCase
         $file = $this->fixturesDir . '/non-existing.json';
 
         $this->expectException(FileNotFoundException::class);
-        $this->expectExceptionMessage("Файл не существует");
+        $this->expectExceptionMessage('Файл не существует');
 
         $this->parser->parseFile($file);
     }
@@ -81,7 +81,7 @@ class ParserTest extends TestCase
         $file = $this->fixturesDir . '/unsupported.txt';
 
         $this->expectException(ParseException::class);
-        $this->expectExceptionMessage("Неподдерживаемый формат");
+        $this->expectExceptionMessage('Неподдерживаемый формат');
 
         $this->parser->parseFile($file);
     }
@@ -91,7 +91,7 @@ class ParserTest extends TestCase
         $file = $this->fixturesDir . '/invalid.json';
 
         $this->expectException(ParseException::class);
-        $this->expectExceptionMessage("Ошибка парсинга JSON");
+        $this->expectExceptionMessage('Ошибка парсинга JSON');
 
         $this->parser->parseFile($file);
     }

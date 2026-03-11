@@ -4,7 +4,7 @@ namespace Hexlet\Gendiff\Utils;
 
 use function Functional\sort;
 
-class ArrayComparator
+class DiffTreeBuilder
 {
     public const ADDED = 'added';
     public const REMOVED = 'removed';
@@ -18,7 +18,7 @@ class ArrayComparator
         $sortedKeys = sort($keys, fn($left, $right) => $left <=> $right);
 
         return array_map(function ($key) use ($data1, $data2) {
-            $inFirst = array_key_exists($key, $data1);
+            $inFirst  = array_key_exists($key, $data1);
             $inSecond = array_key_exists($key, $data2);
 
             if (!$inFirst) {
