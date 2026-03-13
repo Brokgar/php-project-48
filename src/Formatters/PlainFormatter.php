@@ -24,7 +24,7 @@ class PlainFormatter implements FormatterInterface
             };
         }, $diff);
 
-        return implode("\n", array_filter($output));
+        return implode("\n", array_filter($output, static fn (?string $line): bool => $line !== null && $line !== ''));
     }
 
     private function renderPlain(array $diff, string $path = ''): string
