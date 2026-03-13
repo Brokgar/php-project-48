@@ -9,6 +9,11 @@ class CliTest extends TestCase
     private string $fixturesDir;
     private string $binaryPath;
 
+    private function normalizeLineEndings(string $value): string
+    {
+        return str_replace("\r\n", "\n", $value);
+    }
+
     protected function setUp(): void
     {
         $this->fixturesDir = __DIR__ . '/fixtures';
@@ -22,9 +27,11 @@ class CliTest extends TestCase
         $expectedFixture = $this->fixturesDir . '/result_plain.txt';
 
         [$output, $exitCode] = $this->runCli(['-f', 'plain', $file1, $file2]);
+        $expected = file_get_contents($expectedFixture);
 
         $this->assertSame(0, $exitCode);
-        $this->assertStringEqualsFile($expectedFixture, str_replace(PHP_EOL, "\n", $output));
+        $this->assertIsString($expected);
+        $this->assertSame($this->normalizeLineEndings($expected), $this->normalizeLineEndings($output));
     }
 
     public function testCliReturnsErrorForUnknownFormat(): void

@@ -2,9 +2,8 @@
 
 namespace Tests;
 
-use PHPUnit\Framework\TestCase;
-use PHPUnit\Framework\Attributes\DataProvider;
 use Hexlet\Gendiff\Gendiff;
+use PHPUnit\Framework\TestCase;
 
 class GendiffTest extends TestCase
 {
@@ -22,7 +21,9 @@ class GendiffTest extends TestCase
         $this->gendiff = new Gendiff();
     }
 
-    #[DataProvider('compareFilesProvider')]
+    /**
+     * @dataProvider compareFilesProvider
+     */
     public function testGenDiffFormats(string $inputExtension, ?string $format, string $expectedFixture): void
     {
         $file1 = $this->fixturePath("file1.{$inputExtension}");
@@ -33,7 +34,10 @@ class GendiffTest extends TestCase
             ? $this->gendiff->compareFiles($file1, $file2)
             : $this->gendiff->compareFiles($file1, $file2, $format);
 
-        $this->assertStringEqualsFile($expectedFixturePath, $this->normalizeLineEndings($result));
+        $expected = file_get_contents($expectedFixturePath);
+
+        $this->assertIsString($expected);
+        $this->assertSame($this->normalizeLineEndings($expected), $this->normalizeLineEndings($result));
     }
 
     /**

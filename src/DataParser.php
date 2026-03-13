@@ -81,7 +81,7 @@ class DataParser
                     : $trimmedContent;
             },
             array_keys($boms)
-        )));
+        ), static fn (?string $normalizedContent): bool => $normalizedContent !== null));
 
         return $normalizedContents[0] ?? $content;
     }

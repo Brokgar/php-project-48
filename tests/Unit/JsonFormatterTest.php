@@ -10,6 +10,11 @@ class JsonFormatterTest extends TestCase
 {
     private JsonFormatter $formatter;
 
+    private function normalizeLineEndings(string $value): string
+    {
+        return str_replace("\r\n", "\n", $value);
+    }
+
     protected function setUp(): void
     {
         $this->formatter = new JsonFormatter();
@@ -34,9 +39,10 @@ class JsonFormatterTest extends TestCase
     }
 ]
 JSON;
-        $expected = str_replace("\n", PHP_EOL, $expected);
-
-        $this->assertSame($expected, $this->formatter->format($diff));
+        $this->assertSame(
+            $this->normalizeLineEndings($expected),
+            $this->normalizeLineEndings($this->formatter->format($diff))
+        );
     }
 
     public function testFormatNestedDiff(): void

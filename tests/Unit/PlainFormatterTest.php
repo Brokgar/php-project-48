@@ -10,6 +10,11 @@ class PlainFormatterTest extends TestCase
 {
     private PlainFormatter $formatter;
 
+    private function normalizeLineEndings(string $value): string
+    {
+        return str_replace("\r\n", "\n", $value);
+    }
+
     protected function setUp(): void
     {
         $this->formatter = new PlainFormatter();
@@ -181,6 +186,9 @@ Property 'removed' was removed
 Property 'changed' was updated. From 'from' to 'to'
 EXPECTED;
 
-        $this->assertSame($expected, $this->formatter->format($diff));
+        $this->assertSame(
+            $this->normalizeLineEndings($expected),
+            $this->normalizeLineEndings($this->formatter->format($diff))
+        );
     }
 }

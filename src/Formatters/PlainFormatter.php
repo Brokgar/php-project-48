@@ -19,7 +19,7 @@ class PlainFormatter implements FormatterInterface
                     $this->formatPlainValue($node['oldValue']),
                     $this->formatPlainValue($node['newValue'])
                 ),
-                'nested' => $this->renderPlain($node['children'], $currentPath) ?: null,
+                'nested' => $this->formatNestedNode($node['children'], $currentPath),
                 default => null,
             };
         }, $diff);
@@ -30,6 +30,13 @@ class PlainFormatter implements FormatterInterface
     private function renderPlain(array $diff, string $path = ''): string
     {
         return $this->format($diff, $path);
+    }
+
+    private function formatNestedNode(array $children, string $currentPath): ?string
+    {
+        $formattedNode = $this->renderPlain($children, $currentPath);
+
+        return $formattedNode !== '' ? $formattedNode : null;
     }
 
     private function formatPlainValue(mixed $value): string
