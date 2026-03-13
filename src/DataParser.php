@@ -67,18 +67,23 @@ class DataParser
             "\xFE\xFF" => ['length' => 2, 'encoding' => 'UTF-16BE'],
         ];
 
-        foreach ($boms as $bom => $config) {
-            if (str_starts_with($content, $bom)) {
-                $content = substr($content, $config['length']);
-                $encoding = $config['encoding'];
+        $normalizedContents = array_values(array_filter(array_map(
+            function (string $bom) use ($boms, $content): ?string {
+                if (!str_starts_with($content, $bom)) {
+                    return null;
+                }
+
+                $trimmedContent = substr($content, $boms[$bom]['length']);
+                $encoding = $boms[$bom]['encoding'];
 
                 return is_string($encoding)
-                    ? mb_convert_encoding($content, 'UTF-8', $encoding)
-                    : $content;
-            }
-        }
+                    ? mb_convert_encoding($trimmedContent, 'UTF-8', $encoding)
+                    : $trimmedContent;
+            },
+            array_keys($boms)
+        )));
 
-        return $content;
+        return $normalizedContents[0] ?? $content;
     }
 
     private function parseJson(string $content, bool $asArray): mixed

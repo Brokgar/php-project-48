@@ -19,13 +19,12 @@ class CliTest extends TestCase
     {
         $file1 = $this->fixturesDir . '/file1.json';
         $file2 = $this->fixturesDir . '/file2.json';
-        $expected = (string) file_get_contents($this->fixturesDir . '/result_plain.txt');
-        $expected = str_replace("\n", PHP_EOL, $expected);
+        $expectedFixture = $this->fixturesDir . '/result_plain.txt';
 
         [$output, $exitCode] = $this->runCli(['-f', 'plain', $file1, $file2]);
 
         $this->assertSame(0, $exitCode);
-        $this->assertSame($expected, $output);
+        $this->assertStringEqualsFile($expectedFixture, str_replace(PHP_EOL, "\n", $output));
     }
 
     public function testCliReturnsErrorForUnknownFormat(): void

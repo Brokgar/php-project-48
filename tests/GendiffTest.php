@@ -25,17 +25,15 @@ class GendiffTest extends TestCase
     #[DataProvider('compareFilesProvider')]
     public function testGenDiffFormats(string $inputExtension, ?string $format, string $expectedFixture): void
     {
-        $file1 = $this->fixturesDir . "/file1.{$inputExtension}";
-        $file2 = $this->fixturesDir . "/file2.{$inputExtension}";
+        $file1 = $this->fixturePath("file1.{$inputExtension}");
+        $file2 = $this->fixturePath("file2.{$inputExtension}");
+        $expectedFixturePath = $this->fixturePath($expectedFixture);
 
         $result = $format === null
             ? $this->gendiff->compareFiles($file1, $file2)
             : $this->gendiff->compareFiles($file1, $file2, $format);
 
-        $this->assertSame(
-            $this->normalizeFixture($expectedFixture),
-            $this->normalizeLineEndings($result)
-        );
+        $this->assertStringEqualsFile($expectedFixturePath, $this->normalizeLineEndings($result));
     }
 
     /**
@@ -55,8 +53,8 @@ class GendiffTest extends TestCase
         ];
     }
 
-    private function normalizeFixture(string $fixtureName): string
+    private function fixturePath(string $fixtureName): string
     {
-        return $this->normalizeLineEndings((string) file_get_contents($this->fixturesDir . '/' . $fixtureName));
+        return $this->fixturesDir . '/' . $fixtureName;
     }
 }

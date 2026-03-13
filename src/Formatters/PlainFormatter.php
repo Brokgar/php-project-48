@@ -6,39 +6,25 @@ class PlainFormatter implements FormatterInterface
 {
     public function format(array $diff, string $path = ''): string
     {
-        $output = [];
-
-        foreach ($diff as $node) {
+        $output = array_map(function (array $node) use ($path): ?string {
             $key = $node['key'];
             $currentPath = $path !== '' ? "$path.$key" : $key;
 
-            if ($node['type'] === 'added') {
-                $value = $this->formatPlainValue($node['value']);
-                $output[] = "Property '$currentPath' was added with value: $value";
-                continue;
-            }
+            return match ($node['type']) {
+                'added' => "Property '$currentPath' was added with value: {$this->formatPlainValue($node['value'])}",
+                'removed' => "Property '$currentPath' was removed",
+                'changed' => sprintf(
+                    "Property '%s' was updated. From %s to %s",
+                    $currentPath,
+                    $this->formatPlainValue($node['oldValue']),
+                    $this->formatPlainValue($node['newValue'])
+                ),
+                'nested' => $this->renderPlain($node['children'], $currentPath) ?: null,
+                default => null,
+            };
+        }, $diff);
 
-            if ($node['type'] === 'removed') {
-                $output[] = "Property '$currentPath' was removed";
-                continue;
-            }
-
-            if ($node['type'] === 'changed') {
-                $oldValue = $this->formatPlainValue($node['oldValue']);
-                $newValue = $this->formatPlainValue($node['newValue']);
-                $output[] = "Property '$currentPath' was updated. From $oldValue to $newValue";
-                continue;
-            }
-
-            if ($node['type'] === 'nested') {
-                $nestedOutput = $this->renderPlain($node['children'], $currentPath);
-                if ($nestedOutput !== '') {
-                    $output[] = $nestedOutput;
-                }
-            }
-        }
-
-        return implode("\n", $output);
+        return implode("\n", array_filter($output));
     }
 
     private function renderPlain(array $diff, string $path = ''): string
